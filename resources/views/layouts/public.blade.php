@@ -4,7 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#10b981">
-    <title>@yield('title', 'Desa Cibeureum - Sistem Informasi Desa')</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>@yield('title', 'Desa Cibeureum Talaga - Sistem Informasi Desa Terpadu')</title>
+    <meta name="description" content="@yield('meta_description', 'Sistem Informasi Desa Cibeureum Talaga - Portal resmi desa dengan layanan pengumuman, agenda, APBDES, data kependudukan, dan pelayanan surat online.')">
+    <meta name="keywords" content="@yield('meta_keywords', 'desa cibeureum talaga, sistem informasi desa, pengumuman desa, agenda desa, apbdes, data kependudukan, layanan surat online, talaga, majalengka')">
+    <meta name="author" content="Desa Cibeureum Talaga">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="@yield('canonical', request()->url())">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@yield('og_title', 'Desa Cibeureum Talaga - Sistem Informasi Desa')">
+    <meta property="og:description" content="@yield('og_description', 'Portal resmi Desa Cibeureum Talaga dengan layanan informasi dan pelayanan online untuk masyarakat.')">
+    <meta property="og:url" content="@yield('og_url', request()->url())">
+    <meta property="og:image" content="@yield('og_image', asset('logo.svg'))">
+    <meta property="og:site_name" content="Desa Cibeureum Talaga">
+    <meta property="og:locale" content="id_ID">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('twitter_title', 'Desa Cibeureum Talaga - Sistem Informasi Desa')">
+    <meta name="twitter:description" content="@yield('twitter_description', 'Portal resmi Desa Cibeureum Talaga dengan layanan informasi dan pelayanan online untuk masyarakat.')">
+    <meta name="twitter:image" content="@yield('twitter_image', asset('logo.svg'))">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ asset('logo.svg') }}">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Desa Cibeureum Talaga",
+        "url": "https://cibeureumtalaga.id",
+        "logo": "{{ asset('logo.svg') }}",
+        "description": "Sistem Informasi Desa Cibeureum Talaga - Portal resmi desa dengan layanan informasi dan pelayanan online",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Desa Cibeureum",
+            "addressLocality": "Talaga",
+            "addressRegion": "Majalengka",
+            "addressCountry": "ID"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+62-xxx-xxxx-xxxx",
+            "contactType": "customer service"
+        },
+        "sameAs": [
+            "https://cibeureumtalaga.id"
+        ]
+    }
+    </script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
