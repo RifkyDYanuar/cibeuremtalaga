@@ -98,7 +98,16 @@
         <div class="block md:hidden">
             @forelse($pengumuman as $item)
             <div class="border-b border-gray-200 p-3 hover:bg-gray-50 transition-colors duration-200">
-                <div class="flex items-start justify-between mb-2">
+                <div class="flex items-start gap-3 mb-2">
+                    @if($item->gambar)
+                        <div class="w-16 h-12 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                            <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}" class="w-full h-full object-cover">
+                        </div>
+                    @else
+                        <div class="w-16 h-12 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-image text-gray-400 text-sm"></i>
+                        </div>
+                    @endif
                     <div class="flex-1 min-w-0">
                         <h4 class="font-semibold text-gray-900 text-sm truncate">{{ $item->judul }}</h4>
                         <p class="text-xs text-gray-600 mt-1">{{ Str::limit($item->konten, 40) }}</p>
@@ -167,6 +176,7 @@
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
+                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Gambar</th>
                         <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Judul</th>
                         <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Kategori</th>
                         <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Prioritas</th>
@@ -179,6 +189,17 @@
                 <tbody class="bg-white divide-y divide-gray-200">
                     @forelse($pengumuman as $item)
                     <tr class="hover:bg-gray-50 transition-colors duration-200">
+                        <td class="px-3 py-3 whitespace-nowrap">
+                            @if($item->gambar)
+                                <div class="w-16 h-12 rounded-lg overflow-hidden bg-gray-100">
+                                    <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}" class="w-full h-full object-cover">
+                                </div>
+                            @else
+                                <div class="w-16 h-12 rounded-lg bg-gray-100 flex items-center justify-center">
+                                    <i class="fas fa-image text-gray-400 text-sm"></i>
+                                </div>
+                            @endif
+                        </td>
                         <td class="px-3 py-3">
                             <div>
                                 <div class="font-semibold text-gray-900 text-sm">{{ Str::limit($item->judul, 30) }}</div>
@@ -244,7 +265,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="7" class="px-6 py-12 text-center">
+                        <td colspan="8" class="px-6 py-12 text-center">
                             <div class="w-12 h-12 mx-auto mb-3 bg-gray-100 rounded-full flex items-center justify-center">
                                 <i class="fas fa-bullhorn text-gray-400 text-lg"></i>
                             </div>

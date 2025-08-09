@@ -125,10 +125,24 @@
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <h3 class="text-sm md:text-lg font-semibold text-gray-900">Daftar Penduduk</h3>
                 <div class="flex gap-2">
-                    <button onclick="exportData('excel')" 
-                            class="inline-flex items-center px-2 md:px-3 py-1.5 md:py-2 bg-green-600 text-white text-xs font-medium rounded-lg hover:bg-green-700 transition-all duration-200">
-                        <i class="fas fa-file-excel mr-1"></i> <span class="hidden sm:inline">Excel</span>
-                    </button>
+                    <!-- Dropdown untuk Export Excel -->
+                    <div class="relative">
+                        <button onclick="toggleExportDropdown()" 
+                                class="inline-flex items-center px-2 md:px-3 py-1.5 md:py-2 bg-green-600 text-white text-xs font-medium rounded-lg hover:bg-green-700 transition-all duration-200">
+                            <i class="fas fa-file-excel mr-1"></i> <span class="hidden sm:inline">Excel</span>
+                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div id="exportDropdown" class="absolute right-0 mt-1 w-32 bg-white rounded-lg shadow-lg border border-gray-200 z-10 hidden">
+                            <button onclick="exportData('excel', 'csv')" 
+                                    class="block w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-gray-100 rounded-t-lg">
+                                <i class="fas fa-file-csv mr-2"></i>CSV
+                            </button>
+                            <button onclick="exportData('excel', 'excel')" 
+                                    class="block w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-gray-100 rounded-b-lg">
+                                <i class="fas fa-file-excel mr-2"></i>Excel
+                            </button>
+                        </div>
+                    </div>
                     <button onclick="exportData('pdf')" 
                             class="inline-flex items-center px-2 md:px-3 py-1.5 md:py-2 bg-red-600 text-white text-xs font-medium rounded-lg hover:bg-red-700 transition-all duration-200">
                         <i class="fas fa-file-pdf mr-1"></i> <span class="hidden sm:inline">PDF</span>
@@ -343,11 +357,43 @@ function closeDeleteModal() {
     document.getElementById('deleteModal').classList.add('hidden');
 }
 
-function exportData(format) {
+function exportData(format, subFormat = null) {
     const params = new URLSearchParams(window.location.search);
-    params.set('export', format);
-    window.location.href = `{{ route('admin.data-kependudukan.index') }}?${params.toString()}`;
+    
+    let exportUrl;
+    if (format === 'excel') {
+        exportUrl = `{{ route('admin.data-kependudukan.export.excel') }}`;
+        if (subFormat) {
+            params.set('format', subFormat);
+        }
+    } else if (format === 'pdf') {
+        exportUrl = `{{ route('admin.data-kependudukan.export.pdf') }}`;
+    }
+    
+    if (params.toString()) {
+        exportUrl += '?' + params.toString();
+    }
+    
+    // Hide dropdown after selection
+    document.getElementById('exportDropdown').classList.add('hidden');
+    
+    window.location.href = exportUrl;
 }
+
+function toggleExportDropdown() {
+    const dropdown = document.getElementById('exportDropdown');
+    dropdown.classList.toggle('hidden');
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(event) {
+    const dropdown = document.getElementById('exportDropdown');
+    const button = event.target.closest('button');
+    
+    if (!button || !button.onclick || button.onclick.toString().indexOf('toggleExportDropdown') === -1) {
+        dropdown.classList.add('hidden');
+    }
+});
 
 // Auto-submit form on filter change
 document.querySelectorAll('select[name="jenis_kelamin"], select[name="status"], select[name="rt"]').forEach(function(select) {

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Penduduk;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Exports\PendudukExport;
 
 class DataKependudukanController extends Controller
 {
@@ -214,5 +216,87 @@ class DataKependudukanController extends Controller
 
         return redirect()->route('admin.data-kependudukan.index')
                         ->with('success', 'Data penduduk berhasil dihapus');
+    }
+
+    // Export Methods
+    public function exportExcel(Request $request)
+    {
+        try {
+            $export = new PendudukExport($request);
+            $format = $request->get('format', 'csv'); // Default to CSV
+            
+            if ($format === 'excel') {
+                return $export->generateExcel();
+            } else {
+                return $export->generateCSV();
+            }
+        } catch (\Exception $e) {
+            return redirect()->route('admin.data-kependudukan.index')
+                            ->with('error', 'Gagal mengekspor data: ' . $e->getMessage());
+        }
+    }
+
+    public function exportPdf(Request $request)
+    {
+        try {
+            // Query untuk data penduduk dengan filter yang sama
+            $query = Penduduk::query();
+
+            // Filter berdasarkan pencarian
+            if ($request->filled('search')) {
+                $search = $request->search;
+                $query->where(function($q) use ($search) {
+                    $q->where('nama', 'like', "%{$search}%")
+                      ->orWhere('nik', 'like', "%{$search}%");
+                });
+            }
+
+            // Filter berdasarkan jenis kelamin
+            if ($request->filled('jenis_kelamin')) {
+                $query->where('jenis_kelamin', $request->jenis_kelamin);
+            }
+
+            // Filter berdasarkan status
+            if ($request->filled('status')) {
+                $query->where('status', $request->status);
+            }
+
+            // Filter berdasarkan RT
+            if ($request->filled('rt')) {
+                $query->where('rt', $request->rt);
+            }
+
+            $penduduk = $query->orderBy('nama')->get();
+
+            // Statistik untuk header PDF
+            $statistik = [
+                'total_penduduk' => $penduduk->count(),
+                'laki_laki' => $penduduk->where('jenis_kelamin', 'Laki-laki')->count(),
+                'perempuan' => $penduduk->where('jenis_kelamin', 'Perempuan')->count(),
+                'kepala_keluarga' => $penduduk->where('status_dalam_keluarga', 'Kepala Keluarga')->count(),
+            ];
+
+            $data = [
+                'penduduk' => $penduduk,
+                'statistik' => $statistik,
+                'tanggal_export' => date('d F Y'),
+                'filters' => [
+                    'search' => $request->search,
+                    'jenis_kelamin' => $request->jenis_kelamin,
+                    'status' => $request->status,
+                    'rt' => $request->rt
+                ]
+            ];
+
+            $pdf = Pdf::loadView('admin.data-kependudukan.export-pdf', $data);
+            $pdf->setPaper('A4', 'landscape');
+            
+            $filename = 'data-penduduk-' . date('Y-m-d-H-i-s') . '.pdf';
+            return $pdf->download($filename);
+
+        } catch (\Exception $e) {
+            return redirect()->route('admin.data-kependudukan.index')
+                            ->with('error', 'Gagal mengekspor data ke PDF: ' . $e->getMessage());
+        }
     }
 }

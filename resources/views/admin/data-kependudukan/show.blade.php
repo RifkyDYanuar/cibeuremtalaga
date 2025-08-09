@@ -3,65 +3,65 @@
 @section('title', 'Detail Data Penduduk')
 
 @section('content')
-<div class="container-fluid py-4">
-    <!-- Header -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="card border-0 shadow-lg bg-gradient-primary text-white rounded-lg">
-                <div class="card-body py-4">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h2 class="mb-2 font-weight-bold">
-                                <i class="fas fa-user-circle mr-3"></i>Detail Data Penduduk
-                            </h2>
-                            <p class="mb-0 text-white-75">Informasi lengkap data penduduk</p>
-                        </div>
-                        <div class="d-flex gap-2">
-                            <a href="{{ route('admin.data-kependudukan.edit', $penduduk->id) }}" class="btn btn-warning btn-lg shadow">
-                                <i class="fas fa-edit mr-2"></i>Edit
-                            </a>
-                            <a href="{{ route('admin.data-kependudukan.index') }}" class="btn btn-light btn-lg shadow">
-                                <i class="fas fa-arrow-left mr-2"></i>Kembali
-                            </a>
-                        </div>
-                    </div>
+<div class="p-3 md:p-6">
+    <!-- Header Section -->
+    <div class="mb-4 md:mb-6">
+        <div class="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl shadow-lg p-4 md:p-6">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div class="text-white">
+                    <h1 class="text-xl md:text-2xl font-bold mb-2 flex items-center">
+                        <i class="fas fa-user-circle mr-2 md:mr-3"></i>
+                        Detail Data Penduduk
+                    </h1>
+                    <p class="text-emerald-100 text-sm md:text-base">Informasi lengkap data penduduk</p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2">
+                    <a href="{{ route('admin.data-kependudukan.edit', $penduduk->id) }}" 
+                       class="inline-flex items-center justify-center px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl text-sm md:text-base">
+                        <i class="fas fa-edit mr-2"></i>Edit
+                    </a>
+                    <a href="{{ route('admin.data-kependudukan.index') }}" 
+                       class="inline-flex items-center justify-center px-4 py-2 bg-white/20 hover:bg-white/30 text-white font-semibold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl text-sm md:text-base">
+                        <i class="fas fa-arrow-left mr-2"></i>Kembali
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-<div class="row">
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
         <!-- Main Content -->
-        <div class="col-lg-8">
+        <div class="lg:col-span-2 space-y-4 md:space-y-6">
             <!-- Data Pribadi -->
-            <div class="card border-0 shadow-lg rounded-lg mb-4">
-                <div class="card-header bg-gradient-primary text-white py-3 rounded-top">
-                    <h5 class="mb-0 font-weight-bold">
-                        <i class="fas fa-user mr-3"></i>Data Pribadi
-                    </h5>
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 overflow-hidden hover:shadow-xl transition-all duration-300">
+                <div class="bg-gradient-to-r from-emerald-600 to-teal-600 p-4">
+                    <h2 class="text-lg font-bold text-white flex items-center">
+                        <i class="fas fa-user mr-2 md:mr-3"></i>Data Pribadi
+                    </h2>
                 </div>
-                <div class="card-body p-4 bg-light">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="info-group mb-4">
-                                <label class="info-label">
-                                    <i class="fas fa-id-card text-primary mr-2"></i>NIK
+                <div class="p-4 md:p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                        <div class="space-y-4">
+                            <div class="bg-gray-50/80 rounded-lg p-4 border-l-4 border-emerald-500 hover:bg-gray-100/80 transition-colors duration-200">
+                                <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                                    <i class="fas fa-id-card text-emerald-600 mr-2"></i>NIK
                                 </label>
-                                <div class="info-value">{{ $penduduk->nik }}</div>
+                                <div class="text-gray-900 font-medium text-sm md:text-base">{{ $penduduk->nik }}</div>
                             </div>
                             
-                            <div class="info-group mb-4">
-                                <label class="info-label">
-                                    <i class="fas fa-user text-primary mr-2"></i>Nama Lengkap
+                            <div class="bg-gray-50/80 rounded-lg p-4 border-l-4 border-emerald-500 hover:bg-gray-100/80 transition-colors duration-200">
+                                <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                                    <i class="fas fa-user text-emerald-600 mr-2"></i>Nama Lengkap
                                 </label>
-                                <div class="info-value">{{ $penduduk->nama }}</div>
+                                <div class="text-gray-900 font-medium text-sm md:text-base">{{ $penduduk->nama }}</div>
                             </div>
                             
-                            <div class="info-group mb-4">
-                                <label class="info-label">
-                                    <i class="fas fa-venus-mars text-primary mr-2"></i>Jenis Kelamin
+                            <div class="bg-gray-50/80 rounded-lg p-4 border-l-4 border-emerald-500 hover:bg-gray-100/80 transition-colors duration-200">
+                                <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                                    <i class="fas fa-venus-mars text-emerald-600 mr-2"></i>Jenis Kelamin
                                 </label>
-                                <div class="info-value">
-                                    <span class="badge badge-lg {{ $penduduk->jenis_kelamin == 'Laki-laki' ? 'badge-primary' : 'badge-pink' }}">
+                                <div>
+                                    <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium {{ $penduduk->jenis_kelamin == 'Laki-laki' ? 'bg-blue-100 text-blue-800' : 'bg-pink-100 text-pink-800' }}">
                                         <i class="fas {{ $penduduk->jenis_kelamin == 'Laki-laki' ? 'fa-mars' : 'fa-venus' }} mr-1"></i>
                                         {{ $penduduk->jenis_kelamin }}
                                     </span>
@@ -69,30 +69,30 @@
                             </div>
                         </div>
                         
-                        <div class="col-md-6">
-                            <div class="info-group mb-4">
-                                <label class="info-label">
-                                    <i class="fas fa-map-marker-alt text-primary mr-2"></i>Tempat, Tanggal Lahir
+                        <div class="space-y-4">
+                            <div class="bg-gray-50/80 rounded-lg p-4 border-l-4 border-emerald-500 hover:bg-gray-100/80 transition-colors duration-200">
+                                <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                                    <i class="fas fa-map-marker-alt text-emerald-600 mr-2"></i>Tempat, Tanggal Lahir
                                 </label>
-                                <div class="info-value">{{ $penduduk->tempat_lahir }}, {{ $penduduk->tanggal_lahir->format('d F Y') }}</div>
+                                <div class="text-gray-900 font-medium text-sm md:text-base">{{ $penduduk->tempat_lahir }}, {{ $penduduk->tanggal_lahir->format('d F Y') }}</div>
                             </div>
                             
-                            <div class="info-group mb-4">
-                                <label class="info-label">
-                                    <i class="fas fa-birthday-cake text-primary mr-2"></i>Usia
+                            <div class="bg-gray-50/80 rounded-lg p-4 border-l-4 border-emerald-500 hover:bg-gray-100/80 transition-colors duration-200">
+                                <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                                    <i class="fas fa-birthday-cake text-emerald-600 mr-2"></i>Usia
                                 </label>
-                                <div class="info-value">
-                                    <span class="badge badge-lg badge-info">
+                                <div>
+                                    <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-cyan-100 text-cyan-800">
                                         <i class="fas fa-calendar mr-1"></i>{{ $penduduk->usia }} tahun
                                     </span>
                                 </div>
                             </div>
                             
-                            <div class="info-group mb-4">
-                                <label class="info-label">
-                                    <i class="fas fa-pray text-primary mr-2"></i>Agama
+                            <div class="bg-gray-50/80 rounded-lg p-4 border-l-4 border-emerald-500 hover:bg-gray-100/80 transition-colors duration-200">
+                                <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                                    <i class="fas fa-pray text-emerald-600 mr-2"></i>Agama
                                 </label>
-                                <div class="info-value">{{ $penduduk->agama }}</div>
+                                <div class="text-gray-900 font-medium text-sm md:text-base">{{ $penduduk->agama }}</div>
                             </div>
                         </div>
                     </div>
@@ -100,69 +100,90 @@
             </div>
 
             <!-- Data Alamat & Keluarga -->
-            <div class="card border-0 shadow-lg rounded-lg mb-4">
-                <div class="card-header bg-gradient-info text-white py-3 rounded-top">
-                    <h5 class="mb-0 font-weight-bold">
-                        <i class="fas fa-home mr-3"></i>Data Alamat & Keluarga
-                    </h5>
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 overflow-hidden hover:shadow-xl transition-all duration-300">
+                <div class="bg-gradient-to-r from-cyan-600 to-blue-600 p-4">
+                    <h2 class="text-lg font-bold text-white flex items-center">
+                        <i class="fas fa-home mr-2 md:mr-3"></i>Data Alamat & Keluarga
+                    </h2>
                 </div>
-                <div class="card-body p-4 bg-light">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="info-group mb-4">
-                                <label class="info-label">
-                                    <i class="fas fa-map-marker-alt text-info mr-2"></i>Alamat
+                <div class="p-4 md:p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                        <div class="space-y-4">
+                            <div class="bg-gray-50/80 rounded-lg p-4 border-l-4 border-cyan-500 hover:bg-gray-100/80 transition-colors duration-200">
+                                <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                                    <i class="fas fa-map-marker-alt text-cyan-600 mr-2"></i>Alamat
                                 </label>
-                                <div class="info-value">{{ $penduduk->alamat }}</div>
+                                <div class="text-gray-900 font-medium text-sm md:text-base">{{ $penduduk->alamat }}</div>
                             </div>
                             
-                            <div class="info-group mb-4">
-                                <label class="info-label">
-                                    <i class="fas fa-road text-info mr-2"></i>RT/RW
+                            <div class="bg-gray-50/80 rounded-lg p-4 border-l-4 border-cyan-500 hover:bg-gray-100/80 transition-colors duration-200">
+                                <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                                    <i class="fas fa-road text-cyan-600 mr-2"></i>RT/RW
                                 </label>
-                                <div class="info-value">
-                                    <span class="badge badge-lg badge-secondary mr-2">
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
                                         <i class="fas fa-home mr-1"></i>RT {{ $penduduk->rt }}
                                     </span>
-                                    <span class="badge badge-lg badge-secondary">
+                                    <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
                                         <i class="fas fa-building mr-1"></i>RW {{ $penduduk->rw }}
                                     </span>
                                 </div>
                             </div>
                             
-                            <div class="info-group mb-4">
-                                <label class="info-label">
-                                    <i class="fas fa-id-card-alt text-info mr-2"></i>No. KK
+                            <div class="bg-gray-50/80 rounded-lg p-4 border-l-4 border-cyan-500 hover:bg-gray-100/80 transition-colors duration-200">
+                                <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                                    <i class="fas fa-id-card-alt text-cyan-600 mr-2"></i>No. KK
                                 </label>
-                                <div class="info-value">{{ $penduduk->no_kk ?? '-' }}</div>
+                                <div class="text-gray-900 font-medium text-sm md:text-base">{{ $penduduk->no_kk ?? '-' }}</div>
                             </div>
                         </div>
                         
-                        <div class="col-md-6">
-                            <div class="info-group mb-4">
-                                <label class="info-label">
-                                    <i class="fas fa-users text-info mr-2"></i>Status dalam Keluarga
+                        <div class="space-y-4">
+                            <div class="bg-gray-50/80 rounded-lg p-4 border-l-4 border-cyan-500 hover:bg-gray-100/80 transition-colors duration-200">
+                                <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                                    <i class="fas fa-users text-cyan-600 mr-2"></i>Status dalam Keluarga
                                 </label>
-                                <div class="info-value">
-                                    <span class="badge badge-lg badge-warning">
+                                <div>
+                                    <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
                                         <i class="fas fa-user-friends mr-1"></i>{{ $penduduk->status_dalam_keluarga }}
                                     </span>
                                 </div>
                             </div>
                             
-                            <div class="info-group mb-4">
-                                <label class="info-label">
-                                    <i class="fas fa-male text-info mr-2"></i>Nama Ayah
+                            <div class="bg-gray-50/80 rounded-lg p-4 border-l-4 border-cyan-500 hover:bg-gray-100/80 transition-colors duration-200">
+                                <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                                    <i class="fas fa-male text-cyan-600 mr-2"></i>Nama Ayah
                                 </label>
-                                <div class="info-value">{{ $penduduk->nama_ayah ?? '-' }}</div>
+                                <div class="text-gray-900 font-medium text-sm md:text-base">{{ $penduduk->nama_ayah ?? '-' }}</div>
                             </div>
                             
-                            <div class="info-group mb-4">
-                                <label class="info-label">
-                                    <i class="fas fa-female text-info mr-2"></i>Nama Ibu
+                            <div class="bg-gray-50/80 rounded-lg p-4 border-l-4 border-cyan-500 hover:bg-gray-100/80 transition-colors duration-200">
+                                <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                                    <i class="fas fa-female text-cyan-600 mr-2"></i>Nama Ibu
                                 </label>
-                                <div class="info-value">{{ $penduduk->nama_ibu ?? '-' }}</div>
+                                <div class="text-gray-900 font-medium text-sm md:text-base">{{ $penduduk->nama_ibu ?? '-' }}</div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Pernikahan -->
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 overflow-hidden hover:shadow-xl transition-all duration-300">
+                <div class="bg-gradient-to-r from-purple-600 to-pink-600 p-4">
+                    <h2 class="text-lg font-bold text-white flex items-center">
+                        <i class="fas fa-heart mr-2 md:mr-3"></i>Status Pernikahan
+                    </h2>
+                </div>
+                <div class="p-4 md:p-6">
+                    <div class="bg-gray-50/80 rounded-lg p-4 border-l-4 border-purple-500 hover:bg-gray-100/80 transition-colors duration-200">
+                        <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                            <i class="fas fa-ring text-purple-600 mr-2"></i>Status Perkawinan
+                        </label>
+                        <div>
+                            <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
+                                <i class="fas fa-heart mr-1"></i>{{ $penduduk->status_perkawinan }}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -170,32 +191,32 @@
         </div>
 
         <!-- Sidebar -->
-        <div class="col-lg-4">
+        <div class="space-y-4 md:space-y-6">
             <!-- Data Pendidikan & Pekerjaan -->
-            <div class="card border-0 shadow-lg rounded-lg mb-4">
-                <div class="card-header bg-gradient-success text-white py-3 rounded-top">
-                    <h5 class="mb-0 font-weight-bold">
-                        <i class="fas fa-briefcase mr-3"></i>Pendidikan & Pekerjaan
-                    </h5>
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 overflow-hidden hover:shadow-xl transition-all duration-300">
+                <div class="bg-gradient-to-r from-green-600 to-emerald-600 p-4">
+                    <h2 class="text-lg font-bold text-white flex items-center">
+                        <i class="fas fa-briefcase mr-2 md:mr-3"></i>Pendidikan & Pekerjaan
+                    </h2>
                 </div>
-                <div class="card-body p-4 bg-light">
-                    <div class="info-group mb-4">
-                        <label class="info-label">
-                            <i class="fas fa-graduation-cap text-success mr-2"></i>Pendidikan
+                <div class="p-4 md:p-6 space-y-4">
+                    <div class="bg-gray-50/80 rounded-lg p-4 border-l-4 border-green-500 hover:bg-gray-100/80 transition-colors duration-200">
+                        <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                            <i class="fas fa-graduation-cap text-green-600 mr-2"></i>Pendidikan
                         </label>
-                        <div class="info-value">
-                            <span class="badge badge-lg badge-success">
+                        <div>
+                            <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
                                 <i class="fas fa-book mr-1"></i>{{ $penduduk->pendidikan }}
                             </span>
                         </div>
                     </div>
                     
-                    <div class="info-group mb-0">
-                        <label class="info-label">
-                            <i class="fas fa-briefcase text-success mr-2"></i>Pekerjaan
+                    <div class="bg-gray-50/80 rounded-lg p-4 border-l-4 border-green-500 hover:bg-gray-100/80 transition-colors duration-200">
+                        <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                            <i class="fas fa-briefcase text-green-600 mr-2"></i>Pekerjaan
                         </label>
-                        <div class="info-value">
-                            <span class="badge badge-lg badge-primary">
+                        <div>
+                            <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
                                 <i class="fas fa-user-tie mr-1"></i>{{ $penduduk->pekerjaan }}
                             </span>
                         </div>
@@ -204,50 +225,55 @@
             </div>
 
             <!-- Status & Keterangan -->
-            <div class="card border-0 shadow-lg rounded-lg mb-4">
-                <div class="card-header bg-gradient-warning text-white py-3 rounded-top">
-                    <h5 class="mb-0 font-weight-bold">
-                        <i class="fas fa-info-circle mr-3"></i>Status & Keterangan
-                    </h5>
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 overflow-hidden hover:shadow-xl transition-all duration-300">
+                <div class="bg-gradient-to-r from-orange-600 to-yellow-600 p-4">
+                    <h2 class="text-lg font-bold text-white flex items-center">
+                        <i class="fas fa-info-circle mr-2 md:mr-3"></i>Status & Informasi
+                    </h2>
                 </div>
-                <div class="card-body p-4 bg-light">
-                    <div class="info-group mb-4">
-                        <label class="info-label">
-                            <i class="fas fa-check-circle text-warning mr-2"></i>Status
+                <div class="p-4 md:p-6 space-y-4">
+                    <div class="bg-gray-50/80 rounded-lg p-4 border-l-4 border-orange-500 hover:bg-gray-100/80 transition-colors duration-200">
+                        <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                            <i class="fas fa-check-circle text-orange-600 mr-2"></i>Status
                         </label>
-                        <div class="info-value">
+                        <div>
                             @if($penduduk->status == 'aktif' || $penduduk->status == 'Aktif')
-                                <span class="badge badge-lg badge-success">
+                                <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
                                     <i class="fas fa-check-circle mr-1"></i>Aktif
                                 </span>
                             @elseif($penduduk->status == 'pindah' || $penduduk->status == 'Pindah')
-                                <span class="badge badge-lg badge-warning">
+                                <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
                                     <i class="fas fa-truck mr-1"></i>Pindah
                                 </span>
                             @else
-                                <span class="badge badge-lg badge-danger">
+                                <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-red-100 text-red-800">
                                     <i class="fas fa-times-circle mr-1"></i>Meninggal
                                 </span>
                             @endif
                         </div>
                     </div>
                     
-                    <div class="info-group mb-4">
-                        <label class="info-label">
-                            <i class="fas fa-sticky-note text-warning mr-2"></i>Keterangan
+                    <div class="bg-gray-50/80 rounded-lg p-4 border-l-4 border-orange-500 hover:bg-gray-100/80 transition-colors duration-200">
+                        <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                            <i class="fas fa-flag text-orange-600 mr-2"></i>Kewarganegaraan
                         </label>
-                        <div class="info-value">{{ $penduduk->keterangan ?? '-' }}</div>
+                        <div class="text-gray-900 font-medium text-sm md:text-base">{{ $penduduk->kewarganegaraan }}</div>
                     </div>
                     
-                    <div class="info-group mb-0">
-                        <label class="info-label">
-                            <i class="fas fa-clock text-warning mr-2"></i>Waktu Pencatatan
+                    <div class="bg-gray-50/80 rounded-lg p-4 border-l-4 border-orange-500 hover:bg-gray-100/80 transition-colors duration-200">
+                        <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                            <i class="fas fa-sticky-note text-orange-600 mr-2"></i>Keterangan
                         </label>
-                        <div class="info-value">
-                            <small class="text-muted">
-                                <strong>Dibuat:</strong> {{ $penduduk->created_at->format('d F Y H:i') }}<br>
-                                <strong>Diperbarui:</strong> {{ $penduduk->updated_at->format('d F Y H:i') }}
-                            </small>
+                        <div class="text-gray-900 font-medium text-sm md:text-base">{{ $penduduk->keterangan ?? '-' }}</div>
+                    </div>
+                    
+                    <div class="bg-gray-50/80 rounded-lg p-4 border-l-4 border-orange-500 hover:bg-gray-100/80 transition-colors duration-200">
+                        <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">
+                            <i class="fas fa-clock text-orange-600 mr-2"></i>Waktu Pencatatan
+                        </label>
+                        <div class="text-xs text-gray-600 space-y-1">
+                            <div><strong>Dibuat:</strong> {{ $penduduk->created_at->format('d F Y H:i') }}</div>
+                            <div><strong>Diperbarui:</strong> {{ $penduduk->updated_at->format('d F Y H:i') }}</div>
                         </div>
                     </div>
                 </div>
@@ -255,205 +281,4 @@
         </div>
     </div>
 </div>
-
-<style>
-    /* Custom Styles for Detail Page */
-    .bg-gradient-primary {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-    
-    .bg-gradient-info {
-        background: linear-gradient(135deg, #36d1dc 0%, #5b86e5 100%);
-    }
-    
-    .bg-gradient-success {
-        background: linear-gradient(135deg, #1cc88a 0%, #13855c 100%);
-    }
-    
-    .bg-gradient-warning {
-        background: linear-gradient(135deg, #f6c23e 0%, #e6a605 100%);
-    }
-    
-    .text-white-75 {
-        color: rgba(255, 255, 255, 0.75) !important;
-    }
-    
-    .card {
-        border-radius: 20px !important;
-        overflow: hidden;
-        transition: all 0.3s ease;
-        border: none;
-    }
-    
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
-    }
-    
-    .card-header {
-        border-bottom: none;
-    }
-    
-    .rounded-top {
-        border-top-left-radius: 20px !important;
-        border-top-right-radius: 20px !important;
-    }
-    
-    .rounded-lg {
-        border-radius: 20px !important;
-    }
-    
-    .shadow-lg {
-        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
-    }
-    
-    .bg-light {
-        background-color: #f8f9fc !important;
-    }
-    
-    .font-weight-bold {
-        font-weight: 700 !important;
-    }
-    
-    .btn {
-        border-radius: 25px !important;
-        font-weight: 600;
-        padding: 12px 24px;
-        transition: all 0.3s ease;
-        border: none;
-    }
-    
-    .btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    }
-    
-    .gap-2 {
-        gap: 0.5rem !important;
-    }
-    
-    /* Info Groups */
-    .info-group {
-        background: white;
-        border-radius: 15px;
-        padding: 1.25rem;
-        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-        transition: all 0.3s ease;
-        border-left: 4px solid #667eea;
-    }
-    
-    .info-group:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    }
-    
-    .info-label {
-        display: block;
-        font-weight: 600;
-        color: #5a5c69;
-        margin-bottom: 8px;
-        font-size: 0.9rem;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-    
-    .info-value {
-        font-size: 1.1rem;
-        color: #3a3b45;
-        font-weight: 500;
-        line-height: 1.4;
-    }
-    
-    /* Badges */
-    .badge {
-        border-radius: 25px !important;
-        padding: 8px 16px;
-        font-size: 0.85rem;
-        font-weight: 600;
-    }
-    
-    .badge-lg {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-    }
-    
-    .badge-primary {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-    }
-    
-    .badge-pink {
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        color: white;
-    }
-    
-    .badge-info {
-        background: linear-gradient(135deg, #36d1dc 0%, #5b86e5 100%);
-        color: white;
-    }
-    
-    .badge-success {
-        background: linear-gradient(135deg, #1cc88a 0%, #13855c 100%);
-        color: white;
-    }
-    
-    .badge-warning {
-        background: linear-gradient(135deg, #f6c23e 0%, #e6a605 100%);
-        color: white;
-    }
-    
-    .badge-secondary {
-        background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
-        color: white;
-    }
-    
-    .badge-danger {
-        background: linear-gradient(135deg, #e74a3b 0%, #c0392b 100%);
-        color: white;
-    }
-    
-    /* Animation for cards */
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    .card {
-        animation: fadeInUp 0.6s ease-out;
-    }
-    
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-        .container-fluid {
-            padding: 1rem;
-        }
-        
-        .card-body {
-            padding: 1.5rem !important;
-        }
-        
-        .btn {
-            width: 100%;
-            margin-bottom: 0.5rem;
-        }
-        
-        .d-flex {
-            flex-direction: column !important;
-        }
-        
-        .gap-2 {
-            gap: 1rem !important;
-        }
-        
-        .info-group {
-            margin-bottom: 1rem;
-        }
-    }
-</style>
 @endsection

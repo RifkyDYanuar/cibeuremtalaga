@@ -100,6 +100,10 @@ Route::prefix('admin')->middleware('auth')->group(function () {
         'destroy' => 'admin.agenda.destroy'
     ]);
     
+    // Routes untuk export data kependudukan
+    Route::get('data-kependudukan/export/excel', [DataKependudukanController::class, 'exportExcel'])->name('admin.data-kependudukan.export.excel');
+    Route::get('data-kependudukan/export/pdf', [DataKependudukanController::class, 'exportPdf'])->name('admin.data-kependudukan.export.pdf');
+    
     // Routes untuk admin data kependudukan dengan parameter yang benar
     Route::resource('data-kependudukan', DataKependudukanController::class)->parameters([
         'data-kependudukan' => 'penduduk'
