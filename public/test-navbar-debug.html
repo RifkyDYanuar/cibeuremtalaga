@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Mobile Navbar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 1rem 0;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            position: relative;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .navbar-toggle {
+            display: none;
+            background: rgba(255, 255, 255, 0.3);
+            border: 2px solid white;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 8px;
+            width: 44px;
+            height: 44px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .navbar-menu {
+            display: flex;
+        }
+
+        .navbar-nav {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .navbar-nav a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .navbar-toggle {
+                display: flex !important;
+            }
+
+            .navbar-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                border-radius: 0 0 15px 15px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                z-index: 9999;
+            }
+
+            .navbar-menu.open {
+                display: block !important;
+            }
+
+            .navbar-nav {
+                flex-direction: column;
+                padding: 1rem 0;
+                gap: 0;
+            }
+
+            .navbar-nav a {
+                color: #333 !important;
+                padding: 1rem 1.5rem;
+                border-bottom: 1px solid #eee;
+                border-radius: 0;
+            }
+
+            .navbar-nav a:hover {
+                background: #f0f0f0;
+            }
+        }
+
+        .content {
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .test-button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 1rem;
+        }
+
+        .debug-info {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            font-family: monospace;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-brand">
+                <i class="fas fa-home"></i>
+                Test Navbar
+            </a>
+            
+            <button class="navbar-toggle" id="navbarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="navbar-menu" id="navbarMenu">
+                <ul class="navbar-nav">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content">
+        <h1>🧪 Test Mobile Navbar</h1>
+        <p>Resize browser window atau gunakan device mode untuk test mobile</p>
+        
+        <div class="debug-info" id="debugInfo">
+            <h3>🐛 Debug Info:</h3>
+            <div id="debugLog"></div>
+        </div>
+        
+        <button class="test-button" onclick="testNavbar()">
+            🔄 Test Navbar Function
+        </button>
+        
+        <button class="test-button" onclick="clearDebug()">
+            🧹 Clear Debug
+        </button>
+    </div>
+
+    <script>
+        // Debug logging function
+        function log(message) {
+            const debugLog = document.getElementById('debugLog');
+            const timestamp = new Date().toLocaleTimeString();
+            debugLog.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+            console.log(`[${timestamp}] ${message}`);
+        }
+
+        function clearDebug() {
+            document.getElementById('debugLog').innerHTML = '';
+        }
+
+        function testNavbar() {
+            log('🧪 Manual navbar test started...');
+            
+            const toggle = document.getElementById('navbarToggle');
+            const menu = document.getElementById('navbarMenu');
+            
+            log(`Toggle element: ${toggle ? '✅ Found' : '❌ Not found'}`);
+            log(`Menu element: ${menu ? '✅ Found' : '❌ Not found'}`);
+            
+            if (toggle && menu) {
+                const isOpen = menu.classList.contains('open');
+                log(`Menu current state: ${isOpen ? 'OPEN' : 'CLOSED'}`);
+                
+                if (isOpen) {
+                    menu.classList.remove('open');
+                    toggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    log('📴 Menu manually closed');
+                } else {
+                    menu.classList.add('open');
+                    toggle.innerHTML = '<i class="fas fa-times"></i>';
+                    log('📱 Menu manually opened');
+                }
+            }
+        }
+
+        // Initialize navbar
+        function initNavbar() {
+            log('🚀 Initializing navbar...');
+            
+            const toggle = document.getElementById('navbarToggle');
+            const menu = document.getElementById('navbarMenu');
+            
+            if (!toggle || !menu) {
+                log('❌ Navbar elements not found!');
+                return false;
+            }
+
+            log('✅ Elements found, setting up events...');
+
+            function toggleMenu(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                log(`🎯 Toggle clicked! Event type: ${e.type}`);
+                
+                const isOpen = menu.classList.contains('open');
+                log(`Current state: ${isOpen ? 'OPEN' : 'CLOSED'}`);
+                
+                if (isOpen) {
+                    menu.classList.remove('open');
+                    toggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    log('📴 Menu closed via event');
+                } else {
+                    menu.classList.add('open');
+                    toggle.innerHTML = '<i class="fas fa-times"></i>';
+                    log('📱 Menu opened via event');
+                }
+            }
+
+            // Add event listeners
+            toggle.addEventListener('click', toggleMenu);
+            toggle.addEventListener('touchstart', toggleMenu, { passive: false });
+            
+            log('✅ Event listeners added');
+
+            // Close menu when clicking nav links
+            const navLinks = menu.querySelectorAll('a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    menu.classList.remove('open');
+                    toggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    log('🔗 Menu closed via nav link click');
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+                    if (menu.classList.contains('open')) {
+                        menu.classList.remove('open');
+                        toggle.innerHTML = '<i class="fas fa-bars"></i>';
+                        log('🌐 Menu closed via outside click');
+                    }
+                }
+            });
+
+            log('✅ Navbar initialized successfully!');
+            return true;
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            log('📄 DOM Content Loaded');
+            initNavbar();
+        });
+
+        // Fallback
+        window.addEventListener('load', function() {
+            log('🌐 Window loaded');
+            setTimeout(() => {
+                log('⏰ Fallback initialization after 1 second');
+                initNavbar();
+            }, 1000);
+        });
+
+        // Window resize detection
+        window.addEventListener('resize', function() {
+            const width = window.innerWidth;
+            log(`📐 Window resized to: ${width}px`);
+            
+            if (width > 768) {
+                const menu = document.getElementById('navbarMenu');
+                if (menu && menu.classList.contains('open')) {
+                    menu.classList.remove('open');
+                    document.getElementById('navbarToggle').innerHTML = '<i class="fas fa-bars"></i>';
+                    log('🖥️ Menu auto-closed for desktop view');
+                }
+            }
+        });
+
+        log('🎬 Script loaded, waiting for DOM...');
+    </script>
+</body>
+</html>
