@@ -9,7 +9,6 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\PengumumanController;
-use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\PublicPageController;
 use App\Http\Controllers\DataKependudukanController;
 use App\Http\Controllers\ApbdesController;
@@ -165,15 +164,6 @@ Route::get('/storage/lampiran/{filename}', function ($filename) {
     
     return response()->file($path);
 })->middleware('auth')->name('storage.lampiran');
-
-// SEO Routes
-Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
-Route::get('/robots.txt', [SitemapController::class, 'robots'])->name('robots');
-
-// Google Search Console Verification
-Route::get('/googlec7b4b7f9c8e2e7c3.html', function () {
-    return response()->file(public_path('googlec7b4b7f9c8e2e7c3.html'));
-})->name('google.verification');
 
 // Tidak ada middleware auth/role, semua route bebas diakses
 // Route logout sudah otomatis oleh Auth::routes()
