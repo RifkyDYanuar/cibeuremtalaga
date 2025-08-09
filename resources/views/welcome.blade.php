@@ -8,7 +8,72 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <title>SiDesa - Sistem Informasi Desa Cibeureum</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>Desa Cibeureum Talaga - Sistem Informasi Desa Terpadu | Portal Resmi</title>
+    <meta name="description" content="Portal resmi Desa Cibeureum Talaga, Kecamatan Talaga, Kabupaten Majalengka. Layanan informasi desa, pengumuman, agenda, APBDES, data kependudukan, dan pelayanan surat online.">
+    <meta name="keywords" content="desa cibeureum talaga, sistem informasi desa, pengumuman desa, agenda desa, apbdes, data kependudukan, layanan surat online, talaga majalengka, pemerintah desa">
+    <meta name="author" content="Desa Cibeureum Talaga">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://cibeureumtalaga.id">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Desa Cibeureum Talaga - Portal Resmi Sistem Informasi Desa">
+    <meta property="og:description" content="Portal resmi Desa Cibeureum Talaga dengan layanan informasi dan pelayanan online untuk masyarakat. Akses pengumuman, agenda, APBDES, dan layanan surat online.">
+    <meta property="og:url" content="https://cibeureumtalaga.id">
+    <meta property="og:image" content="{{ asset('logo.svg') }}">
+    <meta property="og:site_name" content="Desa Cibeureum Talaga">
+    <meta property="og:locale" content="id_ID">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Desa Cibeureum Talaga - Portal Resmi Sistem Informasi Desa">
+    <meta name="twitter:description" content="Portal resmi Desa Cibeureum Talaga dengan layanan informasi dan pelayanan online untuk masyarakat.">
+    <meta name="twitter:image" content="{{ asset('logo.svg') }}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ asset('logo.svg') }}">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "GovernmentOrganization",
+        "name": "Desa Cibeureum Talaga",
+        "alternateName": "Pemerintah Desa Cibeureum",
+        "url": "https://cibeureumtalaga.id",
+        "logo": "{{ asset('logo.svg') }}",
+        "description": "Pemerintahan Desa Cibeureum, Kecamatan Talaga, Kabupaten Majalengka - Portal resmi dengan layanan informasi dan pelayanan online",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Desa Cibeureum",
+            "addressLocality": "Talaga",
+            "addressRegion": "Majalengka",
+            "postalCode": "45463",
+            "addressCountry": "ID"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "-6.8305",
+            "longitude": "108.2275"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+62-xxx-xxxx-xxxx",
+            "contactType": "customer service",
+            "availableLanguage": "Indonesian"
+        },
+        "sameAs": [
+            "https://cibeureumtalaga.id"
+        ],
+        "areaServed": {
+            "@type": "Place",
+            "name": "Desa Cibeureum, Kecamatan Talaga, Kabupaten Majalengka"
+        }
+    }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script>
