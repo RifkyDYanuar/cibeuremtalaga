@@ -43,8 +43,6 @@ class UserController extends Controller
             'no_hp' => 'required',
             'tujuan_permohonan' => 'required',
             'jenis_surat_id' => 'required',
-            // validasi lampiran opsional
-            'data.lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
 
         // Data utama
@@ -64,22 +62,20 @@ class UserController extends Controller
 
         // Mapping jenis surat berdasarkan nilai yang dikirim dari form
         $jenisSuratMapping = [
-            'ktp_kk' => 1,      // Surat Pengantar Pembuatan KTP/KK
-            'domisili' => 2,    // Surat Keterangan Domisili
-            'sktm' => 3,        // Surat Keterangan Tidak Mampu (SKTM)
-            'skck' => 4,        // Surat Pengantar SKCK
-            'penelitian' => 5,  // Surat Izin Penelitian/Kegiatan
+            'ktp_kk' => 1,      
+            'domisili' => 2,    
+            'sktm' => 3,        
+            'skck' => 4,        
+            'penelitian' => 5,  
         ];
 
         // Penentuan jenis_surat_id
         $jenisSuratId = $request->jenis_surat_id;
         
-        // Jika jenis_surat_id adalah string (predefined types), convert ke ID
         if (array_key_exists($jenisSuratId, $jenisSuratMapping)) {
             $jenisSuratId = $jenisSuratMapping[$jenisSuratId];
         }
         
-        // Jika jenis_surat_id adalah numeric string, convert ke integer
         if (is_numeric($jenisSuratId)) {
             $jenisSuratId = (int) $jenisSuratId;
         }
@@ -94,11 +90,11 @@ class UserController extends Controller
         $dataTambahan = $request->input('data', []);
         
         // Handle file upload jika ada lampiran
-        if ($request->hasFile('data.lampiran')) {
-            $file = $request->file('data.lampiran');
+        if ($request->hasFile('lampiran')) {
+            $file = $request->file('lampiran');
             $filename = time().'_'.$file->getClientOriginalName();
-            $path = $file->storeAs('lampiran', $filename, 'public');
-            $dataTambahan['lampiran'] = $path;
+            $file->move(storage_path('app/images'), $filename);
+            $dataTambahan['lampiran'] = $filename;
         }
 
         $dataGabungan = array_merge($dataUtama, $dataTambahan);

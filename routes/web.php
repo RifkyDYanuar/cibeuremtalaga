@@ -48,20 +48,11 @@ Route::get('/apbdes/export/pdf', [ApbdesController::class, 'exportPdf'])->name('
 
 Route::get('/user/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard')->middleware('auth');
 
-// Routes untuk pengajuan user
-Route::prefix('user')->middleware('auth')->group(function () {
-    Route::get('pengajuan', [PengajuanController::class, 'userIndex'])->name('user.pengajuan.index');
-    Route::get('pengajuan/create', [PengajuanController::class, 'create'])->name('user.pengajuan.create');
-    Route::post('pengajuan', [PengajuanController::class, 'store'])->name('user.pengajuan.store');
-    Route::get('pengajuan/{pengajuan}', [PengajuanController::class, 'show'])->name('user.pengajuan.show');
-    Route::get('pengajuan/{pengajuan}/download', [PengajuanController::class, 'downloadFile'])->name('user.pengajuan.download');
-});
-
-// Legacy routes (untuk kompatibilitas)
-Route::get('/user/pengajuan/form', [UserController::class, 'formPengajuan'])->name('user.pengajuan.form');
-Route::post('/user/pengajuan/form', [UserController::class, 'storePengajuan']);
-Route::get('/user/riwayat', [UserController::class, 'riwayat'])->name('user.riwayat');
-Route::get('/user/pengajuan/{id}', [UserController::class, 'detail'])->name('user.pengajuan.detail');
+// Routes untuk pengajuan user (sederhana)
+Route::get('/user/pengajuan/form', [UserController::class, 'formPengajuan'])->name('user.pengajuan.form')->middleware('auth');
+Route::post('/user/pengajuan/form', [UserController::class, 'storePengajuan'])->middleware('auth');
+Route::get('/user/riwayat', [UserController::class, 'riwayat'])->name('user.riwayat')->middleware('auth');
+Route::get('/user/pengajuan/{id}', [UserController::class, 'detail'])->name('user.pengajuan.detail')->middleware('auth');
 
 // Routes untuk user pengumuman
 Route::prefix('user')->middleware('auth')->group(function () {
@@ -71,23 +62,10 @@ Route::prefix('user')->middleware('auth')->group(function () {
 
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard')->middleware('auth');
 
-// Routes untuk admin pengajuan (CRUD lengkap)
-Route::prefix('admin')->middleware('auth')->group(function () {
-    Route::get('pengajuan', [PengajuanController::class, 'index'])->name('admin.pengajuan.index');
-    Route::get('pengajuan/{pengajuan}', [PengajuanController::class, 'show'])->name('admin.pengajuan.show');
-    Route::get('pengajuan/{pengajuan}/edit', [PengajuanController::class, 'edit'])->name('admin.pengajuan.edit');
-    Route::put('pengajuan/{pengajuan}', [PengajuanController::class, 'update'])->name('admin.pengajuan.update');
-    Route::delete('pengajuan/{pengajuan}', [PengajuanController::class, 'destroy'])->name('admin.pengajuan.destroy');
-    Route::post('pengajuan/bulk-update', [PengajuanController::class, 'bulkUpdate'])->name('admin.pengajuan.bulk-update');
-    Route::get('pengajuan-stats', [PengajuanController::class, 'getStats'])->name('admin.pengajuan.stats');
-    Route::get('pengajuan-export', [PengajuanController::class, 'export'])->name('admin.pengajuan.export');
-    Route::get('pengajuan/{pengajuan}/download', [PengajuanController::class, 'downloadFile'])->name('admin.pengajuan.download');
-});
-
-// Legacy admin routes (untuk kompatibilitas)
-Route::get('/admin/pengajuan', [AdminController::class, 'listPengajuan'])->name('admin.pengajuan.list');
-Route::get('/admin/pengajuan/{id}', [AdminController::class, 'detailPengajuan'])->name('admin.pengajuan.detail');
-Route::post('/admin/pengajuan/{id}/update', [AdminController::class, 'updatePengajuan'])->name('admin.pengajuan.update');
+// Routes untuk admin pengajuan (sederhana)
+Route::get('/admin/pengajuan', [AdminController::class, 'listPengajuan'])->name('admin.pengajuan.list')->middleware('auth');
+Route::get('/admin/pengajuan/{id}', [AdminController::class, 'detailPengajuan'])->name('admin.pengajuan.detail')->middleware('auth');
+Route::post('/admin/pengajuan/{id}/update', [AdminController::class, 'updatePengajuan'])->name('admin.pengajuan.update')->middleware('auth');
 Route::get('/admin/master/jenis-surat', [MasterDataController::class, 'index'])->name('admin.master.jenis_surat');
 Route::post('/admin/master/jenis-surat', [MasterDataController::class, 'store'])->name('admin.master.jenis_surat.store');
 Route::delete('/admin/master/jenis-surat/{id}', [MasterDataController::class, 'destroy'])->name('admin.master.jenis_surat.destroy');
