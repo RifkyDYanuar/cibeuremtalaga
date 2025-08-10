@@ -163,7 +163,7 @@ class Apbdes extends Model
             'Dana Desa' => 'Dana Desa dari APBN',
             'Bagi Hasil Pajak' => 'Bagi Hasil Pajak dan Retribusi',
             'Alokasi Dana Desa' => 'Alokasi Dana Desa (ADD)',
-            'Bantuan Keuangan' => 'Bantuan Keuangan Provinsi/Kabupaten',
+            'Bantuan Keuangan' => 'Bantuan Keuangan Provinsi(PBP)',
             'Hibah dan Sumbangan' => 'Hibah dan Sumbangan Pihak Ketiga',
             'Lain-lain' => 'Pendapatan Lain-lain yang Sah'
         ];

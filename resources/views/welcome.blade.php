@@ -37,43 +37,7 @@
     <link rel="apple-touch-icon" href="{{ asset('logo.svg') }}">
     
     <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "GovernmentOrganization",
-        "name": "Desa Cibeureum Talaga",
-        "alternateName": "Pemerintah Desa Cibeureum",
-        "url": "https://cibeureumtalaga.id",
-        "logo": "{{ asset('logo.svg') }}",
-        "description": "Pemerintahan Desa Cibeureum, Kecamatan Talaga, Kabupaten Majalengka - Portal resmi dengan layanan informasi dan pelayanan online",
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Desa Cibeureum",
-            "addressLocality": "Talaga",
-            "addressRegion": "Majalengka",
-            "postalCode": "45463",
-            "addressCountry": "ID"
-        },
-        "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": "-6.8305",
-            "longitude": "108.2275"
-        },
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "telephone": "+62-xxx-xxxx-xxxx",
-            "contactType": "customer service",
-            "availableLanguage": "Indonesian"
-        },
-        "sameAs": [
-            "https://cibeureumtalaga.id"
-        ],
-        "areaServed": {
-            "@type": "Place",
-            "name": "Desa Cibeureum, Kecamatan Talaga, Kabupaten Majalengka"
-        }
-    }
-    </script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script>
