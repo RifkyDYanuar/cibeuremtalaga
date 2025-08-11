@@ -208,15 +208,8 @@
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition-all duration-200 hover:border-emerald-600/50" 
                             required id="jenisSuratSelect">
                         <option value="">-- Pilih Jenis Surat --</option>
-                        <option value="ktp_kk" {{ old('jenis_surat_id') == 'ktp_kk' ? 'selected' : '' }}>Surat Pengantar Pembuatan KTP/KK</option>
-                        <option value="domisili" {{ old('jenis_surat_id') == 'domisili' ? 'selected' : '' }}>Surat Keterangan Domisili</option>
-                        <option value="sktm" {{ old('jenis_surat_id') == 'sktm' ? 'selected' : '' }}>Surat Keterangan Tidak Mampu (SKTM)</option>
-                        <option value="skck" {{ old('jenis_surat_id') == 'skck' ? 'selected' : '' }}>Surat Pengantar SKCK</option>
-                        <option value="penelitian" {{ old('jenis_surat_id') == 'penelitian' ? 'selected' : '' }}>Surat Izin Penelitian/Kegiatan</option>
                         @foreach($jenisSurats as $jenis)
-                            @if($jenis->id > 5)
-                                <option value="{{ $jenis->id }}" {{ old('jenis_surat_id') == $jenis->id ? 'selected' : '' }}>{{ $jenis->nama }}</option>
-                            @endif
+                            <option value="{{ $jenis->id }}" {{ old('jenis_surat_id') == $jenis->id ? 'selected' : '' }}>{{ $jenis->nama }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -255,7 +248,7 @@
 
 <script>
 const dataTambahan = {
-    ktp_kk: `
+    '1': `
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">
@@ -290,7 +283,7 @@ const dataTambahan = {
             </div>
         </div>
     `,
-    domisili: `
+    '2': `
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">
@@ -317,7 +310,7 @@ const dataTambahan = {
             </div>
         </div>
     `,
-    sktm: `
+    '3': `
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">
@@ -357,7 +350,7 @@ const dataTambahan = {
             </div>
         </div>
     `,
-    skck: `
+    '4': `
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">
@@ -392,7 +385,7 @@ const dataTambahan = {
             </div>
         </div>
     `,
-    penelitian: `
+    '5': `
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">
@@ -461,11 +454,101 @@ const dataTambahan = {
                 </div>
             </div>
         </div>
+    `,
+    '6': `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-file-alt mr-2 text-emerald-600"></i> Tujuan Surat
+                </label>
+                <input type="text" name="data[tujuan_surat]" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition-all duration-200 hover:border-emerald-600/50" placeholder="Tujuan pembuatan surat" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-calendar mr-2 text-emerald-500"></i> Keperluan
+                </label>
+                <input type="text" name="data[keperluan]" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition-all duration-200 hover:border-emerald-600/50" placeholder="Keperluan surat">
+            </div>
+            <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-comment mr-2 text-purple-500"></i> Keterangan Tambahan
+                </label>
+                <textarea name="data[keterangan]" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition-all duration-200 hover:border-emerald-600/50" rows="3" placeholder="Keterangan atau catatan tambahan"></textarea>
+            </div>
+        </div>
+    `,
+    '7': `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-file-alt mr-2 text-emerald-600"></i> Tujuan Surat
+                </label>
+                <input type="text" name="data[tujuan_surat]" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition-all duration-200 hover:border-emerald-600/50" placeholder="Tujuan pembuatan surat" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-calendar mr-2 text-emerald-500"></i> Keperluan
+                </label>
+                <input type="text" name="data[keperluan]" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition-all duration-200 hover:border-emerald-600/50" placeholder="Keperluan surat">
+            </div>
+            <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-comment mr-2 text-purple-500"></i> Keterangan Tambahan
+                </label>
+                <textarea name="data[keterangan]" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition-all duration-200 hover:border-emerald-600/50" rows="3" placeholder="Keterangan atau catatan tambahan"></textarea>
+            </div>
+        </div>
+    `,
+    '8': `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-file-alt mr-2 text-emerald-600"></i> Tujuan Surat
+                </label>
+                <input type="text" name="data[tujuan_surat]" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition-all duration-200 hover:border-emerald-600/50" placeholder="Tujuan pembuatan surat" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-calendar mr-2 text-emerald-500"></i> Keperluan
+                </label>
+                <input type="text" name="data[keperluan]" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition-all duration-200 hover:border-emerald-600/50" placeholder="Keperluan surat">
+            </div>
+            <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-comment mr-2 text-purple-500"></i> Keterangan Tambahan
+                </label>
+                <textarea name="data[keterangan]" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition-all duration-200 hover:border-emerald-600/50" rows="3" placeholder="Keterangan atau catatan tambahan"></textarea>
+            </div>
+        </div>
+    `,
+    '9': `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-file-alt mr-2 text-emerald-600"></i> Tujuan Surat
+                </label>
+                <input type="text" name="data[tujuan_surat]" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition-all duration-200 hover:border-emerald-600/50" placeholder="Tujuan pembuatan surat" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-calendar mr-2 text-emerald-500"></i> Keperluan
+                </label>
+                <input type="text" name="data[keperluan]" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition-all duration-200 hover:border-emerald-600/50" placeholder="Keperluan surat">
+            </div>
+            <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-comment mr-2 text-purple-500"></i> Keterangan Tambahan
+                </label>
+                <textarea name="data[keterangan]" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition-all duration-200 hover:border-emerald-600/50" rows="3" placeholder="Keterangan atau catatan tambahan"></textarea>
+            </div>
+        </div>
     `
 };
 
 document.getElementById('jenisSuratSelect').addEventListener('change', function() {
     const val = this.value;
+    const selectedOption = this.options[this.selectedIndex];
+    const namaJenis = selectedOption.text.toLowerCase();
     const container = document.getElementById('dataTambahan');
     const section = document.getElementById('dataTambahanSection');
     
@@ -476,12 +559,20 @@ document.getElementById('jenisSuratSelect').addEventListener('change', function(
         // Tampilkan section
         section.style.display = 'block';
         
-        // Tampilkan field sesuai jenis surat
-        if (dataTambahan[val]) {
-            container.innerHTML = dataTambahan[val];
-        } else if (val && !isNaN(val)) {
-            // Jika nilai adalah angka (ID dari database), tampilkan form default
-            container.innerHTML = dataTambahan.default;
+        // Tampilkan field berdasarkan nama jenis surat
+        if (namaJenis.includes('ktp') || namaJenis.includes('kartu keluarga')) {
+            container.innerHTML = dataTambahan['1'];
+        } else if (namaJenis.includes('domisili')) {
+            container.innerHTML = dataTambahan['2'];
+        } else if (namaJenis.includes('sktm') || namaJenis.includes('tidak mampu')) {
+            container.innerHTML = dataTambahan['3'];
+        } else if (namaJenis.includes('skck') || namaJenis.includes('catatan kepolisian')) {
+            container.innerHTML = dataTambahan['4'];
+        } else if (namaJenis.includes('penelitian') || namaJenis.includes('riset')) {
+            container.innerHTML = dataTambahan['5'];
+        } else {
+            // Tampilkan form default untuk jenis surat lainnya
+            container.innerHTML = dataTambahan['default'];
         }
     } else {
         // Sembunyikan section

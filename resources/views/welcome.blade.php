@@ -37,7 +37,21 @@
     <link rel="apple-touch-icon" href="{{ asset('logo.svg') }}">
     
     <!-- JSON-LD Structured Data -->
-    
+    {{-- <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Desa Cibeureum Talaga",
+            "url": "https://cibeureumtalaga.id",
+            "description": "Portal resmi Desa Cibeureum Talaga, Kecamatan Talaga, Kabupaten Majalengka.",
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://cibeureumtalaga.id/?s={search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
+        }
+    </script> --}}
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script>
