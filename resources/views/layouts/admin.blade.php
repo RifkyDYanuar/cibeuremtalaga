@@ -131,6 +131,32 @@
             overflow-x: hidden;
         }
         
+        /* Custom Scrollbar for Sidebar */
+        .sidebar-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .sidebar-scroll::-webkit-scrollbar-track {
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 3px;
+        }
+        
+        .sidebar-scroll::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+        }
+        
+        /* Firefox scrollbar */
+        .sidebar-scroll {
+            scrollbar-width: thin;
+            scrollbar-color: #10b981 rgba(16, 185, 129, 0.1);
+        }
+        
         /* Responsive table container */
         .table-responsive {
             overflow-x: auto;
@@ -162,9 +188,9 @@
 <body class="bg-gradient-to-br from-village-light via-white to-village-accent/20 font-sans">
     <div class="min-h-screen flex main-container overflow-x-hidden">
         <!-- Sidebar -->
-        <aside class="fixed inset-y-0 left-0 z-50 w-72 bg-white/80 sidebar-blur border-r border-village-primary/20 shadow-xl transition-transform duration-300 ease-in-out lg:translate-x-0 -translate-x-full" id="sidebar">
+        <aside class="fixed inset-y-0 left-0 z-50 w-72 bg-white/80 sidebar-blur border-r border-village-primary/20 shadow-xl transition-transform duration-300 ease-in-out lg:translate-x-0 -translate-x-full flex flex-col" id="sidebar">
             <!-- Sidebar Header -->
-            <div class="flex items-center justify-between p-6 border-b border-village-primary/10">
+            <div class="flex items-center justify-between p-6 border-b border-village-primary/10 flex-shrink-0">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 bg-gradient-to-br from-village-primary to-village-secondary rounded-xl flex items-center justify-center shadow-lg">
                         <i class="fas fa-home text-white text-lg"></i>
@@ -181,8 +207,9 @@
                 </button>
             </div>
 
-            <!-- Navigation -->
-            <nav class="p-6 space-y-2">
+            <!-- Navigation with Scroll -->
+            <div class="flex-1 overflow-y-auto overflow-x-hidden sidebar-scroll">
+                <nav class="p-6 space-y-2">
                 <a href="{{ route('admin.dashboard') }}" class="nav-item-hover flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 hover:text-village-primary font-medium {{ request()->routeIs('admin.dashboard') ? 'bg-gradient-to-r from-village-primary/10 to-village-secondary/10 text-village-primary border-r-4 border-village-primary' : '' }}">
                     <i class="fas fa-tachometer-alt w-5"></i>
                     <span>Dashboard</span>
@@ -257,7 +284,8 @@
                     <i class="fas fa-chart-bar w-5"></i>
                     <span>Laporan</span>
                 </a>
-            </nav>
+                </nav>
+            </div>
         </aside>
 
         <!-- Main Content -->

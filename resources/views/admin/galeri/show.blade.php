@@ -3,207 +3,189 @@
 @section('page-title', 'Detail Foto Galeri')
 
 @section('content')
-<div class="content-header">
-    <div class="content-header-left">
-        <h1>Detail Foto Galeri</h1>
-        <nav class="breadcrumb">
-            <a href="{{ route('admin.dashboard') }}">Dashboard</a>
-            <span> / </span>
-            <a href="{{ route('admin.galeri.index') }}">Galeri</a>
-            <span> / </span>
-            <span>Detail</span>
+<div class="flex items-center justify-between mb-6">
+    <div>
+        <h1 class="text-2xl font-bold text-gray-900">Detail Foto Galeri</h1>
+        <nav class="flex items-center space-x-2 text-sm text-gray-600 mt-1">
+            <a href="{{ route('admin.dashboard') }}" class="hover:text-blue-600">Dashboard</a>
+            <span>/</span>
+            <a href="{{ route('admin.galeri.index') }}" class="hover:text-blue-600">Galeri</a>
+            <span>/</span>
+            <span class="text-gray-400">Detail</span>
         </nav>
     </div>
-    <div class="content-header-right">
-        <a href="{{ route('admin.galeri.edit', $galeri) }}" class="btn btn-warning">
-            <i class="fas fa-edit"></i> Edit
+    <div class="flex space-x-2">
+        <a href="{{ route('admin.galeri.edit', $galeri) }}" class="inline-flex items-center px-3 py-2 bg-yellow-500 text-white text-sm font-medium rounded-lg hover:bg-yellow-600 transition-colors">
+            <i class="fas fa-edit mr-2"></i> Edit
         </a>
-        <a href="{{ route('galeri.public.show', $galeri) }}" class="btn btn-info" target="_blank">
-            <i class="fas fa-external-link-alt"></i> Lihat Publik
+        <a href="{{ route('galeri.public.show', $galeri) }}" target="_blank" class="inline-flex items-center px-3 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600 transition-colors">
+            <i class="fas fa-external-link-alt mr-2"></i> Lihat Publik
         </a>
-        <a href="{{ route('admin.galeri.index') }}" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Kembali
+        <a href="{{ route('admin.galeri.index') }}" class="inline-flex items-center px-3 py-2 bg-gray-500 text-white text-sm font-medium rounded-lg hover:bg-gray-600 transition-colors">
+            <i class="fas fa-arrow-left mr-2"></i> Kembali
         </a>
     </div>
 </div>
 
-<style>
-.gallery-image-container {
-    margin-bottom: 20px;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.gallery-main-image {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-.detail-section {
-    margin-bottom: 25px;
-}
-
-.detail-section h6 {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-.action-buttons {
-    margin-top: 20px;
-}
-
-.action-buttons .btn {
-    margin-right: 5px;
-    margin-bottom: 10px;
-}
-
-@media (max-width: 768px) {
-    .gallery-main-image {
-        height: 250px;
-    }
-    
-    .detail-grid {
-        grid-template-columns: 1fr !important;
-    }
-    
-    .action-buttons .btn {
-        width: 100%;
-        margin-right: 0;
-    }
-}
-</style>
-
-<div class="content-body">
-    <div class="card">
-        <div class="card-header">
-            <h5>{{ $galeri->judul }}</h5>
-            <div class="header-meta">
-                <span class="badge badge-{{ $galeri->kategori == 'kegiatan' ? 'info' : ($galeri->kategori == 'pembangunan' ? 'primary' : ($galeri->kategori == 'acara' ? 'success' : ($galeri->kategori == 'fasilitas' ? 'warning' : 'secondary'))) }}">
+<!-- Content Body -->
+<div class="bg-white rounded-lg shadow-sm border border-gray-200">
+    <!-- Card Header -->
+    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-purple-600 border-b border-gray-200 rounded-t-lg">
+        <div class="flex items-center justify-between">
+            <h2 class="text-xl font-semibold text-white">{{ $galeri->judul }}</h2>
+            <div class="flex items-center space-x-2">
+                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium
+                    {{ $galeri->kategori == 'kegiatan' ? 'bg-blue-100 text-blue-800' : 
+                       ($galeri->kategori == 'pembangunan' ? 'bg-green-100 text-green-800' : 
+                       ($galeri->kategori == 'acara' ? 'bg-purple-100 text-purple-800' : 
+                       ($galeri->kategori == 'fasilitas' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800'))) }}">
                     {{ ucfirst($galeri->kategori) }}
                 </span>
-                <span class="badge badge-{{ $galeri->status ? 'success' : 'secondary' }}">
+                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium
+                    {{ $galeri->status ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">
                     {{ $galeri->status ? 'Aktif' : 'Tidak Aktif' }}
                 </span>
                 @if($galeri->is_featured)
-                    <span class="badge badge-warning">
-                        <i class="fas fa-star"></i> Unggulan
+                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                        <i class="fas fa-star mr-1"></i> Unggulan
                     </span>
                 @endif
             </div>
         </div>
-        <div class="card-body">
-            <div class="detail-grid">
-                <div class="detail-main">
-                    <div class="gallery-image-container">
+    </div>
+
+    <!-- Card Body -->
+    <div class="p-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Main Content -->
+            <div class="lg:col-span-2">
+                <!-- Image Container -->
+                <div class="mb-6 bg-gray-50 rounded-lg p-4">
+                    <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden shadow-lg">
                         <img src="{{ asset('storage/galeri/' . $galeri->gambar) }}" 
                              alt="{{ $galeri->judul }}"
-                             class="gallery-main-image">
+                             class="w-full h-96 object-cover">
                     </div>
-                    
-                    @if($galeri->deskripsi)
-                        <div class="detail-section">
-                            <h6>Deskripsi</h6>
-                            <p class="text-justify">{{ $galeri->deskripsi }}</p>
-                        </div>
-                    @endif
                 </div>
                 
-                <div class="detail-sidebar">
-                    <div class="info-card">
-                        <h6>Informasi Foto</h6>
-                        <div class="info-list">
-                            <div class="info-item">
-                                <strong>Judul:</strong>
-                                <span>{{ $galeri->judul }}</span>
+                @if($galeri->deskripsi)
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">Deskripsi</h3>
+                        <p class="text-gray-700 leading-relaxed">{{ $galeri->deskripsi }}</p>
+                    </div>
+                @endif
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <!-- Info Card -->
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                        <i class="fas fa-info-circle text-blue-500 mr-2"></i>
+                        Informasi Foto
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-sm font-medium text-gray-600">Judul:</span>
+                            <span class="text-sm text-gray-900 text-right">{{ $galeri->judul }}</span>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <span class="text-sm font-medium text-gray-600">Kategori:</span>
+                            <span class="text-sm text-gray-900">{{ ucfirst($galeri->kategori) }}</span>
+                        </div>
+
+                        @if($galeri->tanggal_foto)
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium text-gray-600">Tanggal Foto:</span>
+                                <span class="text-sm text-gray-900 text-right">{{ $galeri->formatted_tanggal_foto }}</span>
                             </div>
-                            
-                            <div class="info-item">
-                                <strong>Kategori:</strong>
-                                <span>{{ ucfirst($galeri->kategori) }}</span>
+                        @endif
+
+                        @if($galeri->lokasi)
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium text-gray-600">Lokasi:</span>
+                                <span class="text-sm text-gray-900 text-right">{{ $galeri->lokasi }}</span>
                             </div>
+                        @endif
 
-                            @if($galeri->tanggal_foto)
-                                <div class="info-item">
-                                    <strong>Tanggal Foto:</strong>
-                                    <span>{{ $galeri->formatted_tanggal_foto }}</span>
-                                </div>
-                            @endif
-
-                            @if($galeri->lokasi)
-                                <div class="info-item">
-                                    <strong>Lokasi:</strong>
-                                    <span>{{ $galeri->lokasi }}</span>
-                                </div>
-                            @endif
-
-                            @if($galeri->fotografer)
-                                <div class="info-item">
-                                    <strong>Fotografer:</strong>
-                                    <span>{{ $galeri->fotografer }}</span>
-                                </div>
-                            @endif
-
-                            <div class="info-item">
-                                <strong>Urutan:</strong>
-                                <span>{{ $galeri->urutan }}</span>
+                        @if($galeri->fotografer)
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium text-gray-600">Fotografer:</span>
+                                <span class="text-sm text-gray-900 text-right">{{ $galeri->fotografer }}</span>
                             </div>
+                        @endif
 
-                            <div class="info-item">
-                                <strong>Status:</strong>
-                                <span class="badge badge-{{ $galeri->status ? 'success' : 'secondary' }} badge-sm">
-                                    {{ $galeri->status ? 'Aktif' : 'Tidak Aktif' }}
-                                </span>
-                            </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm font-medium text-gray-600">Urutan:</span>
+                            <span class="text-sm text-gray-900">{{ $galeri->urutan }}</span>
+                        </div>
 
-                            <div class="info-item">
-                                <strong>Foto Unggulan:</strong>
-                                <span class="badge badge-{{ $galeri->is_featured ? 'warning' : 'secondary' }} badge-sm">
-                                    {{ $galeri->is_featured ? 'Ya' : 'Tidak' }}
-                                </span>
-                            </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm font-medium text-gray-600">Status:</span>
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium
+                                {{ $galeri->status ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">
+                                {{ $galeri->status ? 'Aktif' : 'Tidak Aktif' }}
+                            </span>
+                        </div>
+
+                        <div class="flex justify-between">
+                            <span class="text-sm font-medium text-gray-600">Foto Unggulan:</span>
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium
+                                {{ $galeri->is_featured ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800' }}">
+                                {{ $galeri->is_featured ? 'Ya' : 'Tidak' }}
+                            </span>
                         </div>
                     </div>
+                </div>
 
-                    <div class="info-card">
-                        <h6>Meta Informasi</h6>
-                        <div class="info-list">
-                            <div class="info-item">
-                                <strong>Dibuat oleh:</strong>
-                                <span>{{ $galeri->creator->name ?? 'Administrator' }}</span>
-                            </div>
+                <!-- Meta Info Card -->
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-4 border border-purple-200">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                        <i class="fas fa-clock text-purple-500 mr-2"></i>
+                        Meta Informasi
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-sm font-medium text-gray-600">Dibuat oleh:</span>
+                            <span class="text-sm text-gray-900">{{ $galeri->creator->name ?? 'Administrator' }}</span>
+                        </div>
 
-                            <div class="info-item">
-                                <strong>Tanggal Upload:</strong>
-                                <span>{{ $galeri->created_at->format('d F Y, H:i') }}</span>
-                            </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm font-medium text-gray-600">Tanggal Upload:</span>
+                            <span class="text-sm text-gray-900 text-right">{{ $galeri->created_at->format('d F Y, H:i') }}</span>
+                        </div>
 
-                            <div class="info-item">
-                                <strong>Terakhir Diupdate:</strong>
-                                <span>{{ $galeri->updated_at->format('d F Y, H:i') }}</span>
-                            </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm font-medium text-gray-600">Terakhir Diupdate:</span>
+                            <span class="text-sm text-gray-900 text-right">{{ $galeri->updated_at->format('d F Y, H:i') }}</span>
                         </div>
                     </div>
+                </div>
 
-                    <div class="action-buttons">
-                        <a href="{{ route('admin.galeri.edit', $galeri) }}" class="btn btn-warning btn-sm">
-                            <i class="fas fa-edit"></i> Edit Foto
+                <!-- Action Buttons -->
+                <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                        <i class="fas fa-cogs text-gray-500 mr-2"></i>
+                        Aksi
+                    </h3>
+                    <div class="space-y-3">
+                        <a href="{{ route('admin.galeri.edit', $galeri) }}" 
+                           class="w-full inline-flex items-center justify-center px-4 py-2 bg-yellow-500 text-white text-sm font-medium rounded-lg hover:bg-yellow-600 transition-colors">
+                            <i class="fas fa-edit mr-2"></i> Edit Foto
                         </a>
-                        <a href="{{ route('galeri.public.show', $galeri) }}" class="btn btn-info btn-sm" target="_blank">
-                            <i class="fas fa-external-link-alt"></i> Lihat di Frontend
+                        <a href="{{ route('galeri.public.show', $galeri) }}" target="_blank"
+                           class="w-full inline-flex items-center justify-center px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600 transition-colors">
+                            <i class="fas fa-external-link-alt mr-2"></i> Lihat di Frontend
                         </a>
                         <form action="{{ route('admin.galeri.destroy', $galeri) }}" 
                               method="POST" 
-                              style="display: inline-block;"
                               onsubmit="return confirm('Apakah Anda yakin ingin menghapus foto ini?')">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">
-                                <i class="fas fa-trash"></i> Hapus
+                            <button type="submit" 
+                                    class="w-full inline-flex items-center justify-center px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition-colors">
+                                <i class="fas fa-trash mr-2"></i> Hapus
                             </button>
                         </form>
                     </div>
