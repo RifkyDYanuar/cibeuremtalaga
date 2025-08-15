@@ -85,6 +85,17 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        /* Mobile dropdown styles */
+        .mobile-dropdown {
+            position: relative;
+        }
+
+        .mobile-dropdown > div {
+            transition: all 0.3s ease-in-out;
+            max-height: 0;
+            overflow: hidden;
+        }
+
         /* Remove conflicting navbar styles and add enhanced transitions */
         #navbar {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -184,6 +195,18 @@
                                 <i class="fas fa-building text-white mr-3 w-4 text-center"></i>
                                 <span class="font-medium">Profil Desa</span>
                             </a>
+                            <a href="#" class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-xl transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-village-primary dark:hover:text-village-secondary mt-2">
+                                <i class="fas fa-sitemap text-village-primary mr-3 w-4 text-center"></i>
+                                <span class="font-medium">Struktur Organisasi</span>
+                            </a>
+                            <a href="{{ route('public.bpd') }}" class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-xl transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-village-primary dark:hover:text-village-secondary mt-2">
+                                <i class="fas fa-users-cog text-village-primary mr-3 w-4 text-center"></i>
+                                <span class="font-medium">BPD</span>
+                            </a>
+                            <a href="{{ route('public.pembangunan') }}" class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-xl transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-village-primary dark:hover:text-village-secondary mt-2">
+                                <i class="fas fa-hammer text-village-primary mr-3 w-4 text-center"></i>
+                                <span class="font-medium">Pembangunan</span>
+                            </a>
                         </div>
                     </li>
                 </ul>
@@ -226,12 +249,32 @@
                             <i class="fas fa-home mr-3"></i>Beranda
                         </a>
                     </li>
-                    <li>
-                        <a href="/tentang"
-                            class="block px-6 py-4 bg-village-primary text-white border border-village-primary rounded-xl transition-all duration-300 font-medium">
-                            <i class="fas fa-info-circle mr-3"></i>
-                            <span class="font-semibold">Tentang Desa</span>
-                        </a>
+                    <li class="mobile-dropdown">
+                        <button onclick="toggleMobileDropdown('tentang')"
+                            class="w-full flex items-center justify-between px-6 py-4 bg-village-primary text-white border border-village-primary rounded-xl transition-all duration-300 font-medium">
+                            <span><i class="fas fa-info-circle mr-3"></i>Tentang Desa</span>
+                            <i class="fas fa-chevron-down transition-transform duration-300" id="tentang-icon"></i>
+                        </button>
+                        <div id="tentang-dropdown" class="overflow-hidden max-h-0 transition-all duration-300">
+                            <div class="mt-2 space-y-1 pl-2">
+                                <a href="/tentang"
+                                    class="block px-6 py-3 text-gray-600 dark:text-gray-400 bg-village-primary text-white border-l-2 border-village-primary rounded-r-lg transition-all duration-300">
+                                    <i class="fas fa-building mr-3 text-white"></i>Profil Desa
+                                </a>
+                                <a href="#"
+                                    class="block px-6 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border-l-2 border-village-primary/50 hover:border-village-primary rounded-r-lg transition-all duration-300">
+                                    <i class="fas fa-sitemap mr-3 text-village-primary"></i>Struktur Organisasi
+                                </a>
+                                <a href="{{ route('public.bpd') }}"
+                                    class="block px-6 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border-l-2 border-village-primary/50 hover:border-village-primary rounded-r-lg transition-all duration-300">
+                                    <i class="fas fa-users-cog mr-3 text-village-primary"></i>BPD
+                                </a>
+                                <a href="{{ route('public.pembangunan') }}"
+                                    class="block px-6 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border-l-2 border-village-primary/50 hover:border-village-primary rounded-r-lg transition-all duration-300">
+                                    <i class="fas fa-hammer mr-3 text-village-primary"></i>Pembangunan
+                                </a>
+                            </div>
+                        </div>
                     </li>
                 </ul>
                 <div class="px-4 mt-6 space-y-3">
@@ -352,7 +395,7 @@
                             <i class="fas fa-users text-white text-2xl"></i>
                         </div>
                         <div class="text-right">
-                            <div class="text-3xl font-black text-gray-900 dark:text-white">3.245</div>
+                            <div class="text-3xl font-black text-gray-900 dark:text-white">2.249</div>
                             <div class="text-sm text-gray-500 dark:text-gray-400 font-medium">Total Penduduk</div>
                         </div>
                     </div>
@@ -368,7 +411,7 @@
                             <i class="fas fa-home text-white text-2xl"></i>
                         </div>
                         <div class="text-right">
-                            <div class="text-3xl font-black text-gray-900 dark:text-white">1.156</div>
+                            <div class="text-3xl font-black text-gray-900 dark:text-white">527</div>
                             <div class="text-sm text-gray-500 dark:text-gray-400 font-medium">Kepala Keluarga</div>
                         </div>
                     </div>
@@ -384,7 +427,7 @@
                             <i class="fas fa-chart-area text-white text-2xl"></i>
                         </div>
                         <div class="text-right">
-                            <div class="text-3xl font-black text-gray-900 dark:text-white">245.8</div>
+                            <div class="text-3xl font-black text-gray-900 dark:text-white">2,25</div>
                             <div class="text-sm text-gray-500 dark:text-gray-400 font-medium">Luas (Hektar)</div>
                         </div>
                     </div>
@@ -400,7 +443,7 @@
                             <i class="fas fa-map-marked-alt text-white text-2xl"></i>
                         </div>
                         <div class="text-right">
-                            <div class="text-3xl font-black text-gray-900 dark:text-white">8 RW</div>
+                            <div class="text-3xl font-black text-gray-900 dark:text-white">4 RW</div>
                             <div class="text-sm text-gray-500 dark:text-gray-400 font-medium">Rukun Warga</div>
                         </div>
                     </div>
@@ -416,7 +459,7 @@
                             <i class="fas fa-flag text-white text-2xl"></i>
                         </div>
                         <div class="text-right">
-                            <div class="text-3xl font-black text-gray-900 dark:text-white">24 RT</div>
+                            <div class="text-3xl font-black text-gray-900 dark:text-white">9 RT</div>
                             <div class="text-sm text-gray-500 dark:text-gray-400 font-medium">Rukun Tetangga</div>
                         </div>
                     </div>
@@ -677,6 +720,20 @@
                 icon.className = 'fas fa-times';
             }
         });
+
+        // Mobile Dropdown Toggle
+        function toggleMobileDropdown(dropdownId) {
+            const dropdown = document.getElementById(dropdownId + '-dropdown');
+            const icon = document.getElementById(dropdownId + '-icon');
+            
+            if (dropdown.style.maxHeight === '0px' || dropdown.style.maxHeight === '') {
+                dropdown.style.maxHeight = dropdown.scrollHeight + 'px';
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                dropdown.style.maxHeight = '0px';
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
 
         // Enhanced Navbar Scroll Effect
         let lastScrollTop = 0;

@@ -147,6 +147,19 @@
     </style>
 </head>
 <body class="font-sans overflow-x-hidden dark:bg-dark-100 dark:text-gray-200 transition-colors duration-300">
+    <!-- Maintenance Notice Banner -->
+    @if(session('maintenance_notice'))
+    <div class="bg-gradient-to-r from-orange-500 to-red-500 text-white p-3 text-center relative z-50">
+        <div class="flex items-center justify-center">
+            <i class="fas fa-tools mr-2"></i>
+            <span class="font-semibold">{{ session('maintenance_notice') }}</span>
+            <a href="/maintenance-preview" class="ml-4 bg-white/20 px-3 py-1 rounded-full text-sm hover:bg-white/30 transition-colors">
+                Preview Halaman Maintenance
+            </a>
+        </div>
+    </div>
+    @endif
+
     <!-- Navigation -->
     <nav id="navbar" class="fixed top-0 w-full z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg border-b border-gray-200/50 dark:border-gray-700/50 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -160,7 +173,7 @@
                         <div class="absolute inset-0 bg-village-primary/20 rounded-full blur-lg"></div>
                     </div>
                     <span
-                        class="bg-gradient-to-r from-village-primary to-village-secondary bg-clip-text text-transparent font-black tracking-tight drop-shadow-lg">Cibeureum</span>
+                        class="bg-gradient-to-r from-village-primary to-village-secondary bg-clip-text text-transparent font-black tracking-tight drop-shadow-lg">SiDesa</span>
                 </a>
 
                 <!-- Desktop Navigation -->
@@ -211,6 +224,101 @@
                                 <div>
                                     <div class="font-medium">APBDES</div>
                                     <div class="text-xs text-gray-500 dark:text-gray-400">Anggaran desa</div>
+                                </div>
+                            </a>
+                            <a href="{{ route('galeri.public') }}" class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-xl transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-village-primary dark:hover:text-village-secondary mt-2">
+                                <i class="fas fa-images mr-3 text-village-primary"></i>
+                                <div>
+                                    <div class="font-medium">Galeri</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">Foto kegiatan</div>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="relative group">
+                        <a href="#"
+                           class="nav-link flex items-center text-gray-700 dark:text-gray-300 hover:text-village-primary dark:hover:text-village-secondary hover:bg-gray-100 dark:hover:bg-gray-800 px-4 xl:px-6 py-3 rounded-full transition-all duration-300 font-medium text-sm xl:text-base">
+                            Tentang Desa
+                            <i class="fas fa-chevron-down ml-1 xl:ml-2 text-sm group-hover:rotate-180 transition-transform duration-300"></i>
+                        </a>
+                        <div class="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-gray-800 shadow-xl rounded-xl p-3 border border-gray-200 dark:border-gray-600 transform -translate-y-2 opacity-0 invisible group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                            <a href="{{ route('public.tentang-desa') }}" class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-xl transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-village-primary dark:hover:text-village-secondary">
+                                <i class="fas fa-info-circle mr-3 text-village-primary"></i>
+                                <div>
+                                    <div class="font-medium">Profil Desa</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">Info lengkap desa</div>
+                                </div>
+                            </a>
+                            <a href="#" class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-xl transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-village-primary dark:hover:text-village-secondary mt-2">
+                                <i class="fas fa-sitemap mr-3 text-village-primary"></i>
+                                <div>
+                                    <div class="font-medium">Struktur Organisasi</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">Susunan pemerintahan</div>
+                                </div>
+                            </a>
+                            <a href="{{ route('public.bpd') }}" class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-xl transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-village-primary dark:hover:text-village-secondary mt-2">
+                                <i class="fas fa-users-cog mr-3 text-village-primary"></i>
+                                <div>
+                                    <div class="font-medium">BPD</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">Badan Permusyawaratan Desa</div>
+                                </div>
+                            </a>
+                            <a href="{{ route('public.pembangunan') }}" class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-xl transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-village-primary dark:hover:text-village-secondary mt-2">
+                                <i class="fas fa-hammer mr-3 text-village-primary"></i>
+                                <div>
+                                    <div class="font-medium">Pembangunan</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">Proyek pembangunan desa</div>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="relative group">
+                        <a href="#"
+                           class="nav-link flex items-center text-gray-700 dark:text-gray-300 hover:text-village-primary dark:hover:text-village-secondary hover:bg-gray-100 dark:hover:bg-gray-800 px-4 xl:px-6 py-3 rounded-full transition-all duration-300 font-medium text-sm xl:text-base">
+                            IDM DESA
+                            <i class="fas fa-chevron-down ml-1 xl:ml-2 text-sm group-hover:rotate-180 transition-transform duration-300"></i>
+                        </a>
+                        <div class="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-gray-800 shadow-xl rounded-xl p-3 border border-gray-200 dark:border-gray-600 transform -translate-y-2 opacity-0 invisible group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                            <a href="{{ route('public.idm.index') }}" class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-xl transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-village-primary dark:hover:text-village-secondary">
+                                <i class="fas fa-chart-line mr-3 text-village-primary"></i>
+                                <div>
+                                    <div class="font-medium">IDM Terkini</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">Status IDM desa saat ini</div>
+                                </div>
+                            </a>
+                            <a href="{{ route('public.idm.year', 2024) }}" class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-xl transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-village-primary dark:hover:text-village-secondary mt-2">
+                                <i class="fas fa-calendar mr-3 text-village-primary"></i>
+                                <div>
+                                    <div class="font-medium">IDM 2024</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">Data IDM tahun 2024</div>
+                                </div>
+                            </a>
+                            <a href="{{ route('public.idm.year', 2023) }}" class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-xl transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-village-primary dark:hover:text-village-secondary mt-2">
+                                <i class="fas fa-calendar mr-3 text-village-primary"></i>
+                                <div>
+                                    <div class="font-medium">IDM 2023</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">Data IDM tahun 2023</div>
+                                </div>
+                            </a>
+                            <a href="{{ route('public.idm.year', 2022) }}" class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-xl transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-village-primary dark:hover:text-village-secondary mt-2">
+                                <i class="fas fa-calendar mr-3 text-village-primary"></i>
+                                <div>
+                                    <div class="font-medium">IDM 2022</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">Data IDM tahun 2022</div>
+                                </div>
+                            </a>
+                            <a href="{{ route('public.idm.year', 2021) }}" class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-xl transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-village-primary dark:hover:text-village-secondary mt-2">
+                                <i class="fas fa-calendar mr-3 text-village-primary"></i>
+                                <div>
+                                    <div class="font-medium">IDM 2021</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">Data IDM tahun 2021</div>
+                                </div>
+                            </a>
+                            <a href="{{ route('public.idm.year', 2020) }}" class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-xl transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-village-primary dark:hover:text-village-secondary mt-2">
+                                <i class="fas fa-calendar mr-3 text-village-primary"></i>
+                                <div>
+                                    <div class="font-medium">IDM 2020</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">Data IDM tahun 2020</div>
                                 </div>
                             </a>
                         </div>
@@ -330,6 +438,72 @@
                                     class="block px-4 sm:px-6 py-2 sm:py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border-l-2 border-village-primary/50 hover:border-village-primary rounded-r-lg transition-all duration-300 text-sm sm:text-base">
                                     <i class="fas fa-money-bill-wave mr-3 text-village-primary"></i>APBDES
                                 </a>
+                                <a href="{{ route('galeri.public') }}"
+                                    class="block px-4 sm:px-6 py-2 sm:py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border-l-2 border-village-primary/50 hover:border-village-primary rounded-r-lg transition-all duration-300 text-sm sm:text-base">
+                                    <i class="fas fa-images mr-3 text-village-primary"></i>Galeri
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="mobile-dropdown">
+                        <button onclick="toggleMobileDropdown('tentang-desa')"
+                            class="w-full flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border border-gray-200 dark:border-gray-600 hover:border-village-primary dark:hover:border-village-secondary rounded-xl transition-all duration-300 font-medium text-sm sm:text-base">
+                            <span><i class="fas fa-building mr-3"></i>Tentang Desa</span>
+                            <i class="fas fa-chevron-down transition-transform duration-300" id="tentang-desa-icon"></i>
+                        </button>
+                        <div id="tentang-desa-dropdown" class="overflow-hidden max-h-0 transition-all duration-300">
+                            <div class="mt-2 space-y-1 pl-2 sm:pl-4">
+                                <a href="{{ route('public.tentang-desa') }}"
+                                    class="block px-4 sm:px-6 py-2 sm:py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border-l-2 border-village-primary/50 hover:border-village-primary rounded-r-lg transition-all duration-300 text-sm sm:text-base">
+                                    <i class="fas fa-info-circle mr-3 text-village-primary"></i>Profil Desa
+                                </a>
+                                <a href="#"
+                                    class="block px-4 sm:px-6 py-2 sm:py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border-l-2 border-village-primary/50 hover:border-village-primary rounded-r-lg transition-all duration-300 text-sm sm:text-base">
+                                    <i class="fas fa-sitemap mr-3 text-village-primary"></i>Struktur Organisasi
+                                </a>
+                                <a href="{{ route('public.bpd') }}"
+                                    class="block px-4 sm:px-6 py-2 sm:py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border-l-2 border-village-primary/50 hover:border-village-primary rounded-r-lg transition-all duration-300 text-sm sm:text-base">
+                                    <i class="fas fa-users-cog mr-3 text-village-primary"></i>BPD
+                                </a>
+                                <a href="{{ route('public.pembangunan') }}"
+                                    class="block px-4 sm:px-6 py-2 sm:py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border-l-2 border-village-primary/50 hover:border-village-primary rounded-r-lg transition-all duration-300 text-sm sm:text-base">
+                                    <i class="fas fa-hammer mr-3 text-village-primary"></i>Pembangunan
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="mobile-dropdown">
+                        <button onclick="toggleMobileDropdown('idm-desa')"
+                            class="w-full flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border border-gray-200 dark:border-gray-600 hover:border-village-primary dark:hover:border-village-secondary rounded-xl transition-all duration-300 font-medium text-sm sm:text-base">
+                            <span><i class="fas fa-chart-line mr-3"></i>IDM DESA</span>
+                            <i class="fas fa-chevron-down transition-transform duration-300" id="idm-desa-icon"></i>
+                        </button>
+                        <div id="idm-desa-dropdown" class="overflow-hidden max-h-0 transition-all duration-300">
+                            <div class="mt-2 space-y-1 pl-2 sm:pl-4">
+                                <a href="{{ route('public.idm.index') }}"
+                                    class="block px-4 sm:px-6 py-2 sm:py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border-l-2 border-village-primary/50 hover:border-village-primary rounded-r-lg transition-all duration-300 text-sm sm:text-base">
+                                    <i class="fas fa-chart-line mr-3 text-village-primary"></i>IDM Terkini
+                                </a>
+                                <a href="{{ route('public.idm.year', 2024) }}"
+                                    class="block px-4 sm:px-6 py-2 sm:py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border-l-2 border-village-primary/50 hover:border-village-primary rounded-r-lg transition-all duration-300 text-sm sm:text-base">
+                                    <i class="fas fa-calendar mr-3 text-village-primary"></i>IDM 2024
+                                </a>
+                                <a href="{{ route('public.idm.year', 2023) }}"
+                                    class="block px-4 sm:px-6 py-2 sm:py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border-l-2 border-village-primary/50 hover:border-village-primary rounded-r-lg transition-all duration-300 text-sm sm:text-base">
+                                    <i class="fas fa-calendar mr-3 text-village-primary"></i>IDM 2023
+                                </a>
+                                <a href="{{ route('public.idm.year', 2022) }}"
+                                    class="block px-4 sm:px-6 py-2 sm:py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border-l-2 border-village-primary/50 hover:border-village-primary rounded-r-lg transition-all duration-300 text-sm sm:text-base">
+                                    <i class="fas fa-calendar mr-3 text-village-primary"></i>IDM 2022
+                                </a>
+                                <a href="{{ route('public.idm.year', 2021) }}"
+                                    class="block px-4 sm:px-6 py-2 sm:py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border-l-2 border-village-primary/50 hover:border-village-primary rounded-r-lg transition-all duration-300 text-sm sm:text-base">
+                                    <i class="fas fa-calendar mr-3 text-village-primary"></i>IDM 2021
+                                </a>
+                                <a href="{{ route('public.idm.year', 2020) }}"
+                                    class="block px-4 sm:px-6 py-2 sm:py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border-l-2 border-village-primary/50 hover:border-village-primary rounded-r-lg transition-all duration-300 text-sm sm:text-base">
+                                    <i class="fas fa-calendar mr-3 text-village-primary"></i>IDM 2020
+                                </a>
                             </div>
                         </div>
                     </li>
@@ -418,6 +592,7 @@
                         <li><a href="{{ route('welcome') }}" class="text-gray-300 hover:text-village-primary transition-colors">Beranda</a></li>
                         <li><a href="{{ route('pengumuman.public') }}" class="text-gray-300 hover:text-village-primary transition-colors">Pengumuman</a></li>
                         <li><a href="{{ route('agenda.public') }}" class="text-gray-300 hover:text-village-primary transition-colors">Agenda</a></li>
+                        <li><a href="{{ route('galeri.public') }}" class="text-gray-300 hover:text-village-primary transition-colors">Galeri</a></li>
                         <li><a href="{{ route('public.data-kependudukan') }}" class="text-gray-300 hover:text-village-primary transition-colors">Data Kependudukan</a></li>
                         <li><a href="{{ route('public.apbdes') }}" class="text-gray-300 hover:text-village-primary transition-colors">APBDES</a></li>
                     </ul>
@@ -533,5 +708,7 @@
             }
         });
     </script>
+    
+    @stack('scripts')
 </body>
 </html>

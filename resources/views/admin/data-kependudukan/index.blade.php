@@ -11,12 +11,23 @@
                 <h1 class="text-xl md:text-2xl font-bold text-gray-900 mb-1">Data Penduduk</h1>
                 <p class="text-xs md:text-sm text-gray-600 hidden sm:block">Kelola data kependudukan desa</p>
             </div>
-            <a href="{{ route('admin.data-kependudukan.create') }}" 
-               class="inline-flex items-center px-3 md:px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-all duration-200 shadow-lg text-xs md:text-sm">
-                <i class="fas fa-plus-circle mr-1 md:mr-2"></i> 
-                <span class="hidden sm:inline">Tambah Data</span>
-                <span class="sm:hidden">Tambah</span>
-            </a>
+            <div class="flex gap-2">
+                <!-- Tombol Import -->
+                <a href="{{ route('admin.data-kependudukan.import-form') }}" 
+                   class="inline-flex items-center px-3 md:px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-lg text-xs md:text-sm">
+                    <i class="fas fa-upload mr-1 md:mr-2"></i> 
+                    <span class="hidden sm:inline">Import Excel/CSV</span>
+                    <span class="sm:hidden">Import</span>
+                </a>
+                
+                <!-- Tombol Tambah Data -->
+                <a href="{{ route('admin.data-kependudukan.create') }}" 
+                   class="inline-flex items-center px-3 md:px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-all duration-200 shadow-lg text-xs md:text-sm">
+                    <i class="fas fa-plus-circle mr-1 md:mr-2"></i> 
+                    <span class="hidden sm:inline">Tambah Data</span>
+                    <span class="sm:hidden">Tambah</span>
+                </a>
+            </div>
         </div>
     </div>
 
@@ -123,7 +134,21 @@
     <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 overflow-hidden">
         <div class="px-3 md:px-4 py-3 border-b border-gray-200">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                <h3 class="text-sm md:text-lg font-semibold text-gray-900">Daftar Penduduk</h3>
+                <div class="flex items-center gap-3">
+                    <h3 class="text-sm md:text-lg font-semibold text-gray-900">Daftar Penduduk</h3>
+                    <!-- Bulk Actions (Initially Hidden) -->
+                    <div id="bulkActions" class="hidden items-center gap-2">
+                        <span id="selectedCount" class="text-sm text-gray-600">0 dipilih</span>
+                        <button onclick="confirmBulkDelete()" 
+                                class="inline-flex items-center px-3 py-1.5 bg-red-600 text-white text-xs font-medium rounded-lg hover:bg-red-700 transition-all duration-200">
+                            <i class="fas fa-trash mr-1"></i> Hapus Terpilih
+                        </button>
+                        <button onclick="clearSelection()" 
+                                class="inline-flex items-center px-3 py-1.5 bg-gray-500 text-white text-xs font-medium rounded-lg hover:bg-gray-600 transition-all duration-200">
+                            <i class="fas fa-times mr-1"></i> Batal
+                        </button>
+                    </div>
+                </div>
                 <div class="flex gap-2">
                     <!-- Dropdown untuk Export Excel -->
                     <div class="relative">
@@ -168,9 +193,15 @@
                 @foreach($penduduk as $index => $p)
                 <div class="bg-gray-50 rounded-lg p-3 border border-gray-200 hover:bg-gray-100 transition-colors duration-200">
                     <div class="flex items-start justify-between mb-2">
-                        <div class="flex-1 min-w-0">
-                            <h4 class="font-semibold text-gray-900 text-sm truncate">{{ $p->nama }}</h4>
-                            <p class="text-xs text-gray-600">NIK: {{ $p->nik }}</p>
+                        <div class="flex items-start gap-2">
+                            <input type="checkbox" 
+                                   class="item-checkbox mt-1" 
+                                   value="{{ $p->id }}" 
+                                   onchange="updateBulkActions()">
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-semibold text-gray-900 text-sm truncate">{{ $p->nama }}</h4>
+                                <p class="text-xs text-gray-600">NIK: {{ $p->nik }}</p>
+                            </div>
                         </div>
                         <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium {{ $p->jenis_kelamin == 'Laki-laki' ? 'bg-blue-100 text-blue-800' : 'bg-pink-100 text-pink-800' }}">
                             {{ $p->jenis_kelamin == 'Laki-laki' ? 'L' : 'P' }}
@@ -224,7 +255,13 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">#</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                <input type="checkbox" 
+                                       id="selectAll" 
+                                       class="rounded border-gray-300 text-blue-600 focus:ring-blue-500" 
+                                       onchange="toggleAllCheckboxes()">
+                            </th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">NO</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">NIK</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Nama</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">JK</th>
@@ -237,6 +274,12 @@
                     <tbody class="bg-white divide-y divide-gray-200">
                         @foreach($penduduk as $index => $p)
                         <tr class="hover:bg-gray-50 transition-colors duration-200">
+                            <td class="px-3 py-3 whitespace-nowrap">
+                                <input type="checkbox" 
+                                       class="item-checkbox rounded border-gray-300 text-blue-600 focus:ring-blue-500" 
+                                       value="{{ $p->id }}" 
+                                       onchange="updateBulkActions()">
+                            </td>
                             <td class="px-3 py-3 whitespace-nowrap text-sm text-gray-900">{{ $penduduk->firstItem() + $index }}</td>
                             <td class="px-3 py-3 whitespace-nowrap">
                                 <div class="text-sm text-gray-900 font-medium">{{ Str::limit($p->nama, 20) }}</div>
@@ -346,6 +389,96 @@
     </div>
 </div>
 
+<!-- Bulk Delete Confirmation Modal -->
+<div id="bulkDeleteModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-2xl bg-white">
+        <div class="mt-3">
+            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+                <i class="fas fa-exclamation-triangle text-red-600"></i>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 text-center mb-2">Konfirmasi Hapus Massal</h3>
+            <p class="text-sm text-gray-500 text-center mb-4">
+                Apakah Anda yakin ingin menghapus <strong id="bulkDeleteCount" class="text-gray-900"></strong> data penduduk yang dipilih?
+            </p>
+            <p class="text-xs text-red-600 text-center mb-6">Data yang dihapus tidak dapat dikembalikan!</p>
+            <div class="flex gap-3">
+                <button type="button" onclick="closeBulkDeleteModal()" 
+                        class="flex-1 px-4 py-2 bg-gray-500 text-white font-medium rounded-lg hover:bg-gray-600 transition-colors duration-200">
+                    Batal
+                </button>
+                <form id="bulkDeleteForm" method="POST" action="{{ route('admin.data-kependudukan.bulk-delete') }}" class="flex-1">
+                    @csrf
+                    @method('DELETE')
+                    <input type="hidden" name="ids" id="bulkDeleteIds">
+                    <button type="submit" 
+                            class="w-full px-4 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-colors duration-200">
+                        Hapus Semua
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Import Modal -->
+<div id="importModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 items-center justify-center">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
+        <div class="flex items-center justify-between p-4 border-b">
+            <h3 class="text-lg font-semibold text-gray-900">Import Data Penduduk</h3>
+            <button onclick="closeImportModal()" class="text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <form action="{{ route('admin.data-kependudukan.import') }}" method="POST" enctype="multipart/form-data" class="p-4">
+            @csrf
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">File Excel/CSV</label>
+                <input type="file" name="file" accept=".xlsx,.xls,.csv" required
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <p class="text-xs text-gray-500 mt-1">Format yang didukung: .xlsx, .xls, .csv (Max: 2MB)</p>
+            </div>
+            
+            <div class="mb-4">
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                    <h4 class="text-sm font-medium text-blue-800 mb-2">Informasi Penting:</h4>
+                    <ul class="text-xs text-blue-700 space-y-1">
+                        <li>• Data dengan NIK yang sudah ada akan dilewati</li>
+                        <li>• Pastikan format tanggal: YYYY-MM-DD atau DD/MM/YYYY</li>
+                        <li>• File Excel akan otomatis dikonversi saat import</li>
+                        <li>• Download template untuk format yang benar</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Download Template:</label>
+                <div class="flex gap-2">
+                    <a href="{{ route('admin.data-kependudukan.download-template') }}?format=csv" 
+                       class="flex-1 inline-flex items-center justify-center px-3 py-2 text-xs border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                        <i class="fas fa-file-csv mr-1"></i>Template CSV
+                    </a>
+                    <a href="{{ route('admin.data-kependudukan.download-template') }}?format=excel" 
+                       class="flex-1 inline-flex items-center justify-center px-3 py-2 text-xs border border-green-300 text-green-700 rounded-lg hover:bg-green-50 transition-colors duration-200">
+                        <i class="fas fa-file-excel mr-1"></i>Template Excel
+                    </a>
+                </div>
+            </div>
+            
+            <div class="flex gap-3">
+                <button type="button" onclick="closeImportModal()" 
+                        class="flex-1 inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                    <i class="fas fa-times mr-2"></i>Batal
+                </button>
+                <button type="submit" 
+                        class="flex-1 inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                    <i class="fas fa-upload mr-2"></i>Import Data
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
 function confirmDelete(id, nama) {
     document.getElementById('pendudukName').textContent = nama;
@@ -355,6 +488,81 @@ function confirmDelete(id, nama) {
 
 function closeDeleteModal() {
     document.getElementById('deleteModal').classList.add('hidden');
+}
+
+// Bulk Actions Functions
+function toggleAllCheckboxes() {
+    const selectAll = document.getElementById('selectAll');
+    const checkboxes = document.querySelectorAll('.item-checkbox');
+    
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = selectAll.checked;
+    });
+    
+    updateBulkActions();
+}
+
+function updateBulkActions() {
+    const checkboxes = document.querySelectorAll('.item-checkbox:checked');
+    const bulkActions = document.getElementById('bulkActions');
+    const selectedCount = document.getElementById('selectedCount');
+    const selectAll = document.getElementById('selectAll');
+    const allCheckboxes = document.querySelectorAll('.item-checkbox');
+    
+    // Update selected count
+    selectedCount.textContent = `${checkboxes.length} dipilih`;
+    
+    // Show/hide bulk actions
+    if (checkboxes.length > 0) {
+        bulkActions.classList.remove('hidden');
+        bulkActions.classList.add('flex');
+    } else {
+        bulkActions.classList.add('hidden');
+        bulkActions.classList.remove('flex');
+    }
+    
+    // Update select all checkbox state
+    if (checkboxes.length === allCheckboxes.length) {
+        selectAll.checked = true;
+        selectAll.indeterminate = false;
+    } else if (checkboxes.length > 0) {
+        selectAll.checked = false;
+        selectAll.indeterminate = true;
+    } else {
+        selectAll.checked = false;
+        selectAll.indeterminate = false;
+    }
+}
+
+function clearSelection() {
+    const checkboxes = document.querySelectorAll('.item-checkbox');
+    const selectAll = document.getElementById('selectAll');
+    
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = false;
+    });
+    selectAll.checked = false;
+    selectAll.indeterminate = false;
+    
+    updateBulkActions();
+}
+
+function confirmBulkDelete() {
+    const checkboxes = document.querySelectorAll('.item-checkbox:checked');
+    const ids = Array.from(checkboxes).map(cb => cb.value);
+    
+    if (ids.length === 0) {
+        alert('Pilih minimal satu data untuk dihapus');
+        return;
+    }
+    
+    document.getElementById('bulkDeleteCount').textContent = ids.length;
+    document.getElementById('bulkDeleteIds').value = ids.join(',');
+    document.getElementById('bulkDeleteModal').classList.remove('hidden');
+}
+
+function closeBulkDeleteModal() {
+    document.getElementById('bulkDeleteModal').classList.add('hidden');
 }
 
 function exportData(format, subFormat = null) {
@@ -407,6 +615,35 @@ document.getElementById('deleteModal').addEventListener('click', function(e) {
     if (e.target === this) {
         closeDeleteModal();
     }
+});
+
+document.getElementById('bulkDeleteModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeBulkDeleteModal();
+    }
+});
+
+// Import Modal Functions
+function openImportModal() {
+    document.getElementById('importModal').classList.remove('hidden');
+    document.getElementById('importModal').classList.add('flex');
+}
+
+function closeImportModal() {
+    document.getElementById('importModal').classList.add('hidden');
+    document.getElementById('importModal').classList.remove('flex');
+}
+
+// Close import modal when clicking outside
+document.getElementById('importModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeImportModal();
+    }
+});
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+    updateBulkActions();
 });
 </script>
 @endsection

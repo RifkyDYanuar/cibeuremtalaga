@@ -1,452 +1,290 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $pengumuman->judul }} - SiDesa Cibeureum</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
-            color: #2c3e50;
-            background-color: #f8f9fa;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
-        }
-        
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .header-content {
-            position: relative;
-            z-index: 2;
-        }
-        
-        .header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        
-        .header p {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-        
-        /* Navigation */
-        .back-nav {
-            background: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .back-nav a {
-            color: #3498db;
-            text-decoration: none;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-        }
-        
-        .back-nav a:hover {
-            color: #2980b9;
-            transform: translateX(-5px);
-        }
-        
-        /* Main Content */
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 3rem;
-            padding: 3rem 0;
-        }
-        
-        .article-content {
-            background: white;
-            border-radius: 15px;
-            padding: 2.5rem;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            border: 1px solid #e9ecef;
-        }
-        
-        .article-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #e9ecef;
-        }
-        
-        .article-kategori {
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .kategori-umum { background: #e3f2fd; color: #1976d2; }
-        .kategori-penting { background: #ffebee; color: #d32f2f; }
-        .kategori-kegiatan { background: #e8f5e8; color: #388e3c; }
-        .kategori-pembangunan { background: #fff3e0; color: #f57c00; }
-        .kategori-kesehatan { background: #f3e5f5; color: #7b1fa2; }
-        .kategori-pendidikan { background: #e0f2f1; color: #00695c; }
-        
-        .article-prioritas {
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-        
-        .prioritas-tinggi { background: #ffebee; color: #d32f2f; }
-        .prioritas-sedang { background: #fff3e0; color: #f57c00; }
-        .prioritas-rendah { background: #e8f5e8; color: #388e3c; }
-        
-        .article-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #2c3e50;
-            line-height: 1.3;
-        }
-        
-        .article-info {
-            display: flex;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            font-size: 0.9rem;
-            color: #6c757d;
-        }
-        
-        .article-info span {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .article-info i {
-            color: #3498db;
-        }
-        
-        .article-image {
-            width: 100%;
-            margin-bottom: 2rem;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        
-        .article-image img {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-        }
-        
-        .article-body {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #2c3e50;
-        }
-        
-        .article-body p {
-            margin-bottom: 1.5rem;
-        }
-        
-        .article-body h2,
-        .article-body h3,
-        .article-body h4 {
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            color: #2c3e50;
-        }
-        
-        .article-body ul,
-        .article-body ol {
-            margin-left: 2rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .article-body li {
-            margin-bottom: 0.5rem;
-        }
-        
-        /* Sidebar */
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-        
-        .sidebar-card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 1px solid #e9ecef;
-        }
-        
-        .sidebar-card h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #2c3e50;
-        }
-        
-        .related-item {
-            display: block;
-            text-decoration: none;
-            color: inherit;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-        
-        .related-item:hover {
-            background: #f8f9fa;
-            border-color: #3498db;
-            transform: translateX(5px);
-        }
-        
-        .related-item h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #2c3e50;
-        }
-        
-        .related-item p {
-            font-size: 0.85rem;
-            color: #6c757d;
-            margin-bottom: 0.5rem;
-        }
-        
-        .related-item .date {
-            font-size: 0.75rem;
-            color: #3498db;
-        }
-        
-        .share-buttons {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid #e9ecef;
-        }
-        
-        .share-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            text-decoration: none;
-            color: white;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-        
-        .share-btn:hover {
-            transform: translateY(-2px);
-        }
-        
-        .share-fb { background: #1877f2; }
-        .share-tw { background: #1da1f2; }
-        .share-wa { background: #25d366; }
-        .share-tg { background: #0088cc; }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-                padding: 2rem 0;
-            }
-            
-            .article-content {
-                padding: 1.5rem;
-            }
-            
-            .article-title {
-                font-size: 1.8rem;
-            }
-            
-            .article-info {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .article-meta {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
-            }
-            
-            .header h1 {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Header -->
-    <div class="header">
-        <div class="container">
-            <div class="header-content">
-                <h1>Detail Pengumuman</h1>
-                <p>Informasi lengkap pengumuman dari Desa Cibeureum</p>
+@extends('layouts.public')
+
+@section('title', $pengumuman->judul . ' - SiDesa Cibeureum')
+
+@section('content')
+<!-- Page Header -->
+<section class="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-village-primary via-village-secondary to-village-accent"></div>
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-[1px]"></div>
+    @if($pengumuman->gambar)
+        <div class="absolute inset-0 bg-[url('{{ asset('storage/' . $pengumuman->gambar) }}')] bg-cover bg-center opacity-20"></div>
+    @else
+        <div class="absolute inset-0 bg-[url('{{ asset('images/cibeureum.jpg') }}')] bg-cover bg-center opacity-20"></div>
+    @endif
+    
+    <div class="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
+        <div class="animate-fadeIn">
+            <span class="inline-block px-6 py-2 bg-white/20 backdrop-blur-md rounded-full text-sm font-semibold mb-4 border border-white/30">
+                <i class="fas fa-bullhorn mr-2"></i>
+                {{ ucfirst($pengumuman->kategori) }}
+            </span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-black mb-8 leading-tight hero-text">
+                {{ $pengumuman->judul }}
+            </h1>
+        </div>
+        <div class="animate-slideUp" style="animation-delay: 0.3s;">
+            <div class="flex flex-wrap justify-center gap-6 text-lg opacity-95">
+                <div class="flex items-center">
+                    <i class="fas fa-calendar-alt mr-2"></i>
+                    {{ $pengumuman->created_at->format('d M Y') }}
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-user mr-2"></i>
+                    {{ $pengumuman->creator->name ?? 'Administrator' }}
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-clock mr-2"></i>
+                    {{ $pengumuman->created_at->diffForHumans() }}
+                </div>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- Back Navigation -->
-    <div class="back-nav">
-        <div class="container">
-            <a href="{{ route('pengumuman.public') }}">
-                <i class="fas fa-arrow-left"></i>
-                Kembali ke Daftar Pengumuman
-            </a>
-        </div>
-    </div>
+<!-- Main Content -->
+<section class="py-20 bg-gradient-to-br from-gray-50 to-white dark:from-dark-100 dark:to-dark-200 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+            <!-- Main Content -->
+            <div class="xl:col-span-2">
+                <div class="bg-white dark:bg-dark-300 rounded-2xl shadow-lg p-8 mb-8">
+                    <!-- Status Badges -->
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center gap-3">
+                            <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold
+                                @if($pengumuman->kategori == 'umum') bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300
+                                @elseif($pengumuman->kategori == 'penting') bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300
+                                @elseif($pengumuman->kategori == 'kegiatan') bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300
+                                @elseif($pengumuman->kategori == 'pembangunan') bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300
+                                @elseif($pengumuman->kategori == 'kesehatan') bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300
+                                @elseif($pengumuman->kategori == 'pendidikan') bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300
+                                @else bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300
+                                @endif">
+                                <i class="fas fa-tag mr-2"></i>
+                                {{ ucfirst($pengumuman->kategori) }}
+                            </span>
+                            
+                            <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold
+                                @if($pengumuman->prioritas == 'tinggi') bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300
+                                @elseif($pengumuman->prioritas == 'sedang') bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300
+                                @else bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300
+                                @endif">
+                                <i class="fas fa-exclamation-triangle mr-2"></i>
+                                Prioritas {{ ucfirst($pengumuman->prioritas) }}
+                            </span>
+                        </div>
+                        
+                        <a href="{{ route('pengumuman.public') }}" 
+                           class="inline-flex items-center px-4 py-2 text-village-primary hover:text-village-secondary border border-village-primary hover:border-village-secondary rounded-lg transition-all duration-300">
+                            <i class="fas fa-arrow-left mr-2"></i>
+                            Kembali ke Daftar
+                        </a>
+                    </div>
 
-    <!-- Main Content -->
-    <div class="container">
-        <div class="main-content">
-            <article class="article-content">
-                <div class="article-meta">
-                    <span class="article-kategori kategori-{{ $pengumuman->kategori }}">
-                        {{ ucfirst($pengumuman->kategori) }}
-                    </span>
-                    <span class="article-prioritas prioritas-{{ $pengumuman->prioritas }}">
-                        Prioritas {{ ucfirst($pengumuman->prioritas) }}
-                    </span>
-                </div>
+                    <!-- Pengumuman Image -->
+                    @if($pengumuman->gambar)
+                        <div class="mb-8">
+                            <img src="{{ asset('storage/' . $pengumuman->gambar) }}" 
+                                 alt="{{ $pengumuman->judul }}"
+                                 class="w-full h-64 object-cover rounded-xl shadow-lg">
+                        </div>
+                    @endif
 
-                <h1 class="article-title">{{ $pengumuman->judul }}</h1>
+                    <!-- Pengumuman Content -->
+                    <div class="prose prose-lg max-w-none dark:prose-invert">
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Isi Pengumuman</h2>
+                        <div class="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+                            {!! nl2br(e($pengumuman->konten)) !!}
+                        </div>
+                    </div>
 
-                <div class="article-info">
-                    <span>
-                        <i class="fas fa-calendar-alt"></i>
-                        {{ $pengumuman->created_at->format('d F Y') }}
-                    </span>
-                    <span>
-                        <i class="fas fa-user"></i>
-                        {{ $pengumuman->creator->name ?? 'Admin' }}
-                    </span>
-                    <span>
-                        <i class="fas fa-clock"></i>
-                        {{ $pengumuman->created_at->diffForHumans() }}
-                    </span>
-                </div>
-
-                @if($pengumuman->gambar)
-                <div class="article-image">
-                    <img src="{{ asset('storage/' . $pengumuman->gambar) }}" alt="{{ $pengumuman->judul }}">
-                </div>
-                @endif
-
-                <div class="article-body">
-                    {!! nl2br(e($pengumuman->konten)) !!}
-                </div>
-
-                <div class="share-buttons">
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" class="share-btn share-fb" target="_blank">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}&text={{ urlencode($pengumuman->judul) }}" class="share-btn share-tw" target="_blank">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="https://wa.me/?text={{ urlencode($pengumuman->judul . ' - ' . request()->fullUrl()) }}" class="share-btn share-wa" target="_blank">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                    <a href="https://t.me/share/url?url={{ urlencode(request()->fullUrl()) }}&text={{ urlencode($pengumuman->judul) }}" class="share-btn share-tg" target="_blank">
-                        <i class="fab fa-telegram"></i>
-                    </a>
-                </div>
-            </article>
-
-            <aside class="sidebar">
-                @if($relatedAnnouncements->count() > 0)
-                <div class="sidebar-card">
-                    <h3><i class="fas fa-newspaper"></i> Pengumuman Terkait</h3>
-                    @foreach($relatedAnnouncements as $related)
-                    <a href="{{ route('pengumuman.public') }}?id={{ $related->id }}" class="related-item">
-                        <h4>{{ $related->judul }}</h4>
-                        <p>{{ Str::limit(strip_tags($related->konten), 80) }}</p>
-                        <div class="date">{{ $related->created_at->format('d M Y') }}</div>
-                    </a>
-                    @endforeach
-                </div>
-                @endif
-
-                <div class="sidebar-card">
-                    <h3><i class="fas fa-info-circle"></i> Informasi</h3>
-                    <div style="font-size: 0.9rem; color: #6c757d;">
-                        <p><strong>Kategori:</strong> {{ ucfirst($pengumuman->kategori) }}</p>
-                        <p><strong>Prioritas:</strong> {{ ucfirst($pengumuman->prioritas) }}</p>
-                        <p><strong>Dipublikasikan:</strong> {{ $pengumuman->created_at->format('d F Y') }}</p>
+                    <!-- Pengumuman Details -->
+                    <div class="mt-8 p-6 bg-gray-50 dark:bg-dark-400 rounded-xl">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Detail Pengumuman</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="flex items-center gap-3">
+                                <div class="p-3 bg-village-primary/10 rounded-lg">
+                                    <i class="fas fa-calendar-alt text-village-primary"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Tanggal Publikasi</p>
+                                    <p class="font-semibold text-gray-900 dark:text-white">{{ $pengumuman->created_at->format('d F Y') }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center gap-3">
+                                <div class="p-3 bg-village-primary/10 rounded-lg">
+                                    <i class="fas fa-tag text-village-primary"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Kategori</p>
+                                    <p class="font-semibold text-gray-900 dark:text-white">{{ ucfirst($pengumuman->kategori) }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center gap-3">
+                                <div class="p-3 bg-village-primary/10 rounded-lg">
+                                    <i class="fas fa-exclamation-triangle text-village-primary"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Prioritas</p>
+                                    <p class="font-semibold text-gray-900 dark:text-white">{{ ucfirst($pengumuman->prioritas) }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center gap-3">
+                                <div class="p-3 bg-village-primary/10 rounded-lg">
+                                    <i class="fas fa-user text-village-primary"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Dipublikasikan oleh</p>
+                                    <p class="font-semibold text-gray-900 dark:text-white">{{ $pengumuman->creator->name ?? 'Administrator' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
                         @if($pengumuman->tanggal_selesai)
-                        <p><strong>Berlaku sampai:</strong> {{ $pengumuman->tanggal_selesai->format('d F Y') }}</p>
+                            <div class="mt-4 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-clock text-yellow-600"></i>
+                                    <span class="text-sm font-medium text-yellow-800 dark:text-yellow-200">
+                                        Pengumuman berlaku sampai: {{ $pengumuman->tanggal_selesai->format('d F Y') }}
+                                    </span>
+                                </div>
+                            </div>
                         @endif
+                    </div>
+
+                    <!-- Share Buttons -->
+                    <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-600">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Bagikan Pengumuman</h3>
+                        <div class="flex gap-3">
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" 
+                               target="_blank"
+                               class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300">
+                                <i class="fab fa-facebook-f mr-2"></i>
+                                Facebook
+                            </a>
+                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}&text={{ urlencode($pengumuman->judul) }}" 
+                               target="_blank"
+                               class="inline-flex items-center px-4 py-2 bg-blue-400 text-white rounded-lg hover:bg-blue-500 transition-colors duration-300">
+                                <i class="fab fa-twitter mr-2"></i>
+                                Twitter
+                            </a>
+                            <a href="https://wa.me/?text={{ urlencode($pengumuman->judul . ' - ' . request()->fullUrl()) }}" 
+                               target="_blank"
+                               class="inline-flex items-center px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-300">
+                                <i class="fab fa-whatsapp mr-2"></i>
+                                WhatsApp
+                            </a>
+                            <button onclick="copyToClipboard()" 
+                                    class="inline-flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors duration-300">
+                                <i class="fas fa-copy mr-2"></i>
+                                Salin Link
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="xl:space-y-6">
+                <!-- Related Pengumuman -->
+                @if($relatedAnnouncements->count() > 0)
+                    <div class="bg-white dark:bg-dark-300 rounded-2xl shadow-lg p-6">
+                        <div class="text-center mb-6">
+                            <div class="inline-block px-4 py-2 bg-village-primary/10 text-village-primary rounded-full text-sm font-semibold mb-3">
+                                📢 PENGUMUMAN TERKAIT
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Pengumuman {{ ucfirst($pengumuman->kategori) }} Lainnya</h3>
+                        </div>
+                        <div class="space-y-4">
+                            @foreach($relatedAnnouncements as $related)
+                                <div class="p-4 bg-gray-50 dark:bg-dark-400 rounded-lg border-l-4 border-village-primary hover:shadow-md transition-shadow duration-300">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white line-clamp-2">{{ $related->judul }}</h4>
+                                        <span class="text-xs text-village-primary font-medium">{{ $related->created_at->format('d M') }}</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">{{ Str::limit(strip_tags($related->konten), 80) }}</p>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs px-2 py-1 bg-village-primary/10 text-village-primary rounded-full">
+                                            {{ ucfirst($related->kategori) }}
+                                        </span>
+                                        <a href="{{ route('pengumuman.public.show', $related->id) }}" 
+                                           class="text-xs text-village-primary hover:text-village-secondary font-medium">
+                                            Baca Selengkapnya →
+                                        </a>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+
+                <!-- Info Kontak -->
+                <div class="bg-white dark:bg-dark-300 rounded-2xl shadow-lg p-6">
+                    <div class="text-center mb-6">
+                        <div class="inline-block px-4 py-2 bg-village-primary/10 text-village-primary rounded-full text-sm font-semibold mb-3">
+                            📞 KONTAK
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Informasi Kontak</h3>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-map-marker-alt text-village-primary"></i>
+                            <span class="text-sm text-gray-600 dark:text-gray-400">Jl. Desa Cibeureum, Talaga, Majalengka</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-phone text-village-primary"></i>
+                            <span class="text-sm text-gray-600 dark:text-gray-400">(0233) 123-456</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-village-primary"></i>
+                            <span class="text-sm text-gray-600 dark:text-gray-400">info@cibeureum.desa.id</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-clock text-village-primary mt-0.5"></i>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">
+                                <div class="font-medium">Jam Layanan:</div>
+                                <div>Senin - Jumat: 08:00 - 16:00</div>
+                                <div>Sabtu: 08:00 - 12:00</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="sidebar-card">
-                    <h3><i class="fas fa-phone"></i> Kontak</h3>
-                    <div style="font-size: 0.9rem; color: #6c757d;">
-                        <p><strong>Kantor Desa Cibeureum</strong></p>
-                        <p><i class="fas fa-map-marker-alt"></i> Jl. Desa Cibeureum, Talaga</p>
-                        <p><i class="fas fa-phone"></i> (021) 1234-5678</p>
-                        <p><i class="fas fa-envelope"></i> cibeureum@gmail.com</p>
+                <!-- Action Buttons -->
+                <div class="bg-white dark:bg-dark-300 rounded-2xl shadow-lg p-6">
+                    <div class="text-center mb-6">
+                        <div class="inline-block px-4 py-2 bg-village-primary/10 text-village-primary rounded-full text-sm font-semibold mb-3">
+                            📋 AKSI
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Tindakan</h3>
+                    </div>
+                    <div class="space-y-3">
+                        <button onclick="window.print()" 
+                                class="w-full bg-gradient-to-r from-village-primary to-village-secondary text-white font-semibold py-3 px-4 rounded-lg hover:from-village-secondary hover:to-village-primary transition-all duration-300">
+                            <i class="fas fa-print mr-2"></i>
+                            Cetak Pengumuman
+                        </button>
+                        <a href="{{ route('pengumuman.public') }}" 
+                           class="block w-full text-center border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold py-3 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300">
+                            <i class="fas fa-list mr-2"></i>
+                            Semua Pengumuman
+                        </a>
                     </div>
                 </div>
             </aside>
         </div>
     </div>
-</body>
-</html>
+</section>
+
+<script>
+function copyToClipboard() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+        alert('Link berhasil disalin ke clipboard!');
+    });
+}
+</script>
+@endsection

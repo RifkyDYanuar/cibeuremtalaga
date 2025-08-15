@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Penduduk;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Exports\PendudukExport;
+use App\Exports\PendudukTemplateExport;
+use App\Imports\PendudukImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DataKependudukanController extends Controller
 {
@@ -297,6 +300,134 @@ class DataKependudukanController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('admin.data-kependudukan.index')
                             ->with('error', 'Gagal mengekspor data ke PDF: ' . $e->getMessage());
+        }
+    }
+
+    // Import Methods
+    public function importForm()
+    {
+        return view('admin.data-kependudukan.import');
+    }
+
+    public function downloadTemplate()
+    {
+        try {
+            return Excel::download(new PendudukTemplateExport, 'template-data-penduduk.xlsx');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.data-kependudukan.index')
+                            ->with('error', 'Gagal mendownload template: ' . $e->getMessage());
+        }
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,xls,csv|max:10240', // Max 10MB
+        ], [
+            'file.required' => 'File harus dipilih',
+            'file.file' => 'File tidak valid',
+            'file.mimes' => 'File harus berformat Excel (.xlsx, .xls) atau CSV (.csv)',
+            'file.max' => 'Ukuran file maksimal 10MB',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $import = new PendudukImport();
+            Excel::import($import, $request->file('file'));
+
+            $stats = $import->getStats();
+
+            DB::commit();
+
+            $message = "Import berhasil! ";
+            $message .= "Data berhasil diimpor: {$stats['imported']}, ";
+            $message .= "Data dilewati: {$stats['skipped']}";
+
+            if (!empty($stats['errors'])) {
+                $message .= ". Errors: " . implode(', ', array_slice($stats['errors'], 0, 5));
+                if (count($stats['errors']) > 5) {
+                    $message .= " dan " . (count($stats['errors']) - 5) . " error lainnya.";
+                }
+            }
+
+            return redirect()->route('admin.data-kependudukan.index')
+                            ->with('success', $message);
+
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            DB::rollBack();
+            
+            $failures = $e->failures();
+            $errorMessages = [];
+            
+            foreach ($failures as $failure) {
+                $row = $failure->row();
+                $attribute = $failure->attribute();
+                $errors = $failure->errors();
+                $values = $failure->values();
+                
+                $errorMessages[] = "Baris {$row}, Kolom {$attribute}: " . implode(', ', $errors);
+            }
+            
+            $message = "Validasi gagal pada " . count($failures) . " baris. ";
+            $message .= "Error pertama: " . (isset($errorMessages[0]) ? $errorMessages[0] : 'Unknown error');
+            
+            return redirect()->route('admin.data-kependudukan.import-form')
+                            ->with('error', $message)
+                            ->withInput();
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            return redirect()->route('admin.data-kependudukan.import-form')
+                            ->with('error', 'Gagal mengimpor data: ' . $e->getMessage())
+                            ->withInput();
+        }
+    }
+
+    public function bulkDelete(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|string'
+        ]);
+
+        // Convert comma-separated string to array
+        $ids = explode(',', $request->ids);
+        $ids = array_filter($ids); // Remove empty values
+
+        // Validate each ID exists
+        $validIds = Penduduk::whereIn('id', $ids)->pluck('id')->toArray();
+        
+        if (empty($validIds)) {
+            return redirect()->route('admin.data-kependudukan.index')
+                           ->with('error', 'Tidak ada data yang valid untuk dihapus');
+        }
+
+        try {
+            $count = Penduduk::whereIn('id', $validIds)->delete();
+            
+            // Check if it's an AJAX request
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => "Berhasil menghapus {$count} data penduduk"
+                ]);
+            }
+            
+            // Regular form submission
+            return redirect()->route('admin.data-kependudukan.index')
+                           ->with('success', "Berhasil menghapus {$count} data penduduk");
+                           
+        } catch (\Exception $e) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Gagal menghapus data: ' . $e->getMessage()
+                ], 500);
+            }
+            
+            return redirect()->route('admin.data-kependudukan.index')
+                           ->with('error', 'Gagal menghapus data: ' . $e->getMessage());
         }
     }
 }

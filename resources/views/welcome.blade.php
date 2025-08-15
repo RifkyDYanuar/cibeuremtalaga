@@ -582,6 +582,14 @@
                                 <i class="fas fa-users text-village-primary mr-3 w-4 text-center"></i>
                                 <span class="font-medium">Struktur Organisasi</span>
                             </a>
+                            <a href="{{ route('public.bpd') }}" class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-xl transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-village-primary dark:hover:text-village-secondary mt-2">
+                                <i class="fas fa-users-cog text-village-primary mr-3 w-4 text-center"></i>
+                                <span class="font-medium">BPD</span>
+                            </a>
+                            <a href="{{ route('public.pembangunan') }}" class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-xl transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-village-primary dark:hover:text-village-secondary mt-2">
+                                <i class="fas fa-hammer text-village-primary mr-3 w-4 text-center"></i>
+                                <span class="font-medium">Pembangunan</span>
+                            </a>
                         </div>
                     </li>
                     <li class="relative group">
@@ -627,6 +635,10 @@
                             <a href="{{ route('public.apbdes') }}" class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-xl transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-village-primary dark:hover:text-village-secondary mt-2">
                                 <i class="fas fa-money-bill-wave text-village-primary mr-3 w-4 text-center"></i>
                                 <span class="font-medium">APBDES</span>
+                            </a>
+                            <a href="{{ route('galeri.public') }}" class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-xl transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-village-primary dark:hover:text-village-secondary mt-2">
+                                <i class="fas fa-images text-village-primary mr-3 w-4 text-center"></i>
+                                <span class="font-medium">Galeri</span>
                             </a>
                         </div>
                     </li>
@@ -686,6 +698,14 @@
                                     class="block px-4 sm:px-6 py-2 sm:py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border-l-2 border-village-primary/50 hover:border-village-primary rounded-r-lg transition-all duration-300 text-sm sm:text-base">
                                     <i class="fas fa-users mr-3 text-village-primary"></i>Struktur Organisasi
                                 </a>
+                                <a href="{{ route('public.bpd') }}"
+                                    class="block px-4 sm:px-6 py-2 sm:py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border-l-2 border-village-primary/50 hover:border-village-primary rounded-r-lg transition-all duration-300 text-sm sm:text-base">
+                                    <i class="fas fa-users-cog mr-3 text-village-primary"></i>BPD
+                                </a>
+                                <a href="{{ route('public.pembangunan') }}"
+                                    class="block px-4 sm:px-6 py-2 sm:py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border-l-2 border-village-primary/50 hover:border-village-primary rounded-r-lg transition-all duration-300 text-sm sm:text-base">
+                                    <i class="fas fa-hammer mr-3 text-village-primary"></i>Pembangunan
+                                </a>
                             </div>
                         </div>
                     </li>
@@ -739,6 +759,15 @@
                                 <a href="{{ route('public.apbdes') }}"
                                     class="block px-4 sm:px-6 py-2 sm:py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border-l-2 border-village-primary/50 hover:border-village-primary rounded-r-lg transition-all duration-300 text-sm sm:text-base">
                                     <i class="fas fa-money-bill-wave mr-3 text-village-primary"></i>APBDES
+                                </a>
+                              
+                                <a href="{{ route('public.idm.index') }}"
+                                    class="block px-4 sm:px-6 py-2 sm:py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border-l-2 border-village-primary/50 hover:border-village-primary rounded-r-lg transition-all duration-300 text-sm sm:text-base">
+                                    <i class="fas fa-chart-line mr-3 text-village-primary"></i>IDM DESA
+                                </a>
+                                <a href="{{ route('galeri.public') }}"
+                                    class="block px-4 sm:px-6 py-2 sm:py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-village-primary dark:hover:text-village-secondary border-l-2 border-village-primary/50 hover:border-village-primary rounded-r-lg transition-all duration-300 text-sm sm:text-base">
+                                    <i class="fas fa-images mr-3 text-village-primary"></i>Galeri
                                 </a>
                             </div>
                         </div>
@@ -837,6 +866,129 @@
             <i class="fas fa-chevron-down text-2xl opacity-70"></i>
         </div>
     </section>
+
+    <!-- IDM DESA Section -->
+    @if($latestIdm)
+    <section class="py-16 sm:py-20 bg-gradient-to-br from-village-primary/5 to-village-secondary/5 dark:from-village-primary/10 dark:to-village-secondary/10 transition-colors duration-300" id="idm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 sm:mb-16 animate-slideUp">
+                <div class="inline-block px-4 sm:px-6 py-2 bg-village-primary/10 text-village-primary rounded-full text-sm font-semibold mb-4">
+                    📊 INDEKS DESA MEMBANGUN
+                </div>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 dark:text-white mb-4 sm:mb-6">
+                    Status <span class="gradient-text">IDM</span> Desa
+                </h2>
+                <p class="text-lg sm:text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed px-4">
+                    Indeks Desa Membangun menunjukkan tingkat kemajuan desa berdasarkan aspek sosial, ekonomi, dan lingkungan
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <!-- IDM Score Card -->
+                <div class="order-2 lg:order-1">
+                    <div class="bg-white dark:bg-dark-300 rounded-3xl shadow-2xl hover:shadow-3xl transform hover:-translate-y-1 transition-all duration-500 overflow-hidden border border-gray-100 dark:border-dark-400 p-8">
+                        <div class="text-center mb-6">
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-village-primary to-village-secondary rounded-full mb-4">
+                                <i class="fas fa-chart-line text-white text-2xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">IDM {{ $latestIdm->tahun }}</h3>
+                        </div>
+
+                        <!-- Main Score -->
+                        <div class="text-center mb-8">
+                            <div class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-village-primary to-village-secondary mb-2">
+                                {{ number_format($latestIdm->skor_idm, 3) }}
+                            </div>
+                            <div class="inline-block px-6 py-3 rounded-full text-white font-bold text-lg
+                                @if($latestIdm->status_idm == 'Mandiri') bg-gradient-to-r from-green-500 to-green-600
+                                @elseif($latestIdm->status_idm == 'Maju') bg-gradient-to-r from-blue-500 to-blue-600
+                                @elseif($latestIdm->status_idm == 'Berkembang') bg-gradient-to-r from-cyan-500 to-cyan-600
+                                @elseif($latestIdm->status_idm == 'Tertinggal') bg-gradient-to-r from-yellow-500 to-yellow-600
+                                @else bg-gradient-to-r from-red-500 to-red-600
+                                @endif">
+                                {{ $latestIdm->status_idm }}
+                            </div>
+                        </div>
+
+                        <!-- Components -->
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="text-center p-4 bg-red-50 dark:bg-red-900/20 rounded-xl">
+                                <div class="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                                    <i class="fas fa-home text-white text-sm"></i>
+                                </div>
+                                <div class="text-sm font-semibold text-red-600 dark:text-red-400 mb-1">IKS</div>
+                                <div class="text-lg font-bold text-gray-900 dark:text-white">{{ number_format($latestIdm->skor_iks, 3) }}</div>
+                            </div>
+                            <div class="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-xl">
+                                <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                                    <i class="fas fa-coins text-white text-sm"></i>
+                                </div>
+                                <div class="text-sm font-semibold text-green-600 dark:text-green-400 mb-1">IKE</div>
+                                <div class="text-lg font-bold text-gray-900 dark:text-white">{{ number_format($latestIdm->skor_ike, 3) }}</div>
+                            </div>
+                            <div class="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
+                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                                    <i class="fas fa-leaf text-white text-sm"></i>
+                                </div>
+                                <div class="text-sm font-semibold text-blue-600 dark:text-blue-400 mb-1">IKL</div>
+                                <div class="text-lg font-bold text-gray-900 dark:text-white">{{ number_format($latestIdm->skor_ikl, 3) }}</div>
+                            </div>
+                        </div>
+
+                        <!-- Action Button -->
+                        <div class="text-center">
+                            <a href="{{ route('public.idm.index') }}" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-village-primary to-village-secondary text-white font-semibold rounded-xl hover:from-village-primary/90 hover:to-village-secondary/90 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                <i class="fas fa-chart-bar mr-2"></i>
+                                Lihat Detail IDM
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IDM Info -->
+                <div class="order-1 lg:order-2">
+                    <div class="space-y-6">
+                        <div class="bg-white dark:bg-dark-300 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-dark-400">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-red-100 dark:bg-red-900/20 rounded-xl flex items-center justify-center mr-4">
+                                    <i class="fas fa-home text-red-500 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold text-gray-900 dark:text-white">Indeks Ketahanan Sosial</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Pendidikan, kesehatan, modal sosial</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-dark-300 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-dark-400">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-xl flex items-center justify-center mr-4">
+                                    <i class="fas fa-coins text-green-500 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold text-gray-900 dark:text-white">Indeks Ketahanan Ekonomi</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Keragaman produksi, akses ekonomi</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-dark-300 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-dark-400">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-xl flex items-center justify-center mr-4">
+                                    <i class="fas fa-leaf text-blue-500 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold text-gray-900 dark:text-white">Indeks Ketahanan Lingkungan</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Kualitas lingkungan, infrastruktur</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @endif
 
     <!-- Struktur Perangkat Desa Section -->
     <section

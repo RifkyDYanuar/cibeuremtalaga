@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test BPD Images</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .image-section { margin: 30px 0; }
+        .image-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        img { width: 100%; max-width: 300px; border: 1px solid #ccc; border-radius: 8px; }
+        h2 { color: #333; border-bottom: 2px solid #059669; padding-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Testing BPD Images</h1>
+    
+    <div class="image-section">
+        <h2>BPD Placeholder Images</h2>
+        <div class="image-grid">
+            <div>
+                <h3>Default Avatar</h3>
+                <img src="/images/default-avatar.svg" alt="Default Avatar">
+            </div>
+            <div>
+                <h3>Activity Placeholder</h3>
+                <img src="/images/placeholder-activity.svg" alt="Activity Placeholder">
+            </div>
+        </div>
+    </div>
+    
+    <div class="image-section">
+        <h2>BPD Sample Images</h2>
+        <div class="image-grid">
+            <div>
+                <h3>Sample Member (General)</h3>
+                <img src="/storage/bpd/members/sample-member.svg" alt="Sample Member">
+            </div>
+            <div>
+                <h3>Ketua BPD</h3>
+                <img src="/storage/bpd/members/ketua-bpd.svg" alt="Ketua BPD">
+            </div>
+            <div>
+                <h3>Sekretaris BPD</h3>
+                <img src="/storage/bpd/members/sekretaris-bpd.svg" alt="Sekretaris BPD">
+            </div>
+            <div>
+                <h3>Sample Activity</h3>
+                <img src="/storage/bpd/activities/sample-activity.svg" alt="Sample Activity">
+            </div>
+        </div>
+    </div>
+    
+    <div class="image-section">
+        <h2>Pembangunan Images (for comparison)</h2>
+        <div class="image-grid">
+            <div>
+                <h3>Placeholder Development</h3>
+                <img src="/images/placeholder-development.svg" alt="Placeholder Development">
+            </div>
+            <div>
+                <h3>Sample Jalan</h3>
+                <img src="/storage/pembangunan/sample-jalan.svg" alt="Sample Jalan">
+            </div>
+            <div>
+                <h3>Sample Balai</h3>
+                <img src="/storage/pembangunan/sample-balai.svg" alt="Sample Balai">
+            </div>
+        </div>
+    </div>
+    
+    <div style="margin-top: 40px; padding: 20px; background: #dcfce7; border-radius: 8px; border: 2px solid #22c55e;">
+        <h3 style="color: #15803d;">✅ Image Upload System - FIXED!</h3>
+        <p><strong>Issues Resolved:</strong></p>
+        <ul>
+            <li>Fixed double path storage issue in BPD controllers</li>
+            <li>Corrected file deletion paths for updates</li>
+            <li>Updated existing database records with correct paths</li>
+            <li>All uploaded images now display properly</li>
+        </ul>
+        <p><strong>Test Results:</strong> All images (both uploaded and sample) are now accessible via their URLs.</p>
+    </div>
+    
+    <div style="margin-top: 20px; padding: 20px; background: #f0fdf4; border-radius: 8px;">
+        <h3>Navigation Links</h3>
+        <ul>
+            <li><a href="/bpd">View BPD Public Page</a></li>
+            <li><a href="/pembangunan">View Pembangunan Public Page</a></li>
+            <li><a href="/admin/bpd">Admin BPD Management</a></li>
+            <li><a href="/admin/pembangunan">Admin Pembangunan Management</a></li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -110,6 +110,24 @@
             </div>
         </div>
     </button>
+
+    <a href="{{ route('admin.bpd.index') }}" class="stat-card-hover group">
+        <div class="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-lg border border-gray-100 hover:border-village-primary/30 transition-all duration-300">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="text-xs md:text-sm text-gray-600 font-medium">Kelola BPD</div>
+                    <div class="text-xs text-gray-400 mt-1">Manajemen BPD desa</div>
+                </div>
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg md:rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                    <i class="fas fa-building text-white text-sm md:text-base"></i>
+                </div>
+            </div>
+            <div class="mt-3 md:mt-4 flex items-center text-xs text-orange-600">
+                <i class="fas fa-users mr-1"></i>
+                Anggota & Kegiatan
+            </div>
+        </div>
+    </a>
 </div>
 
 <!-- Statistics Cards -->
@@ -195,6 +213,28 @@
                     <i class="fas fa-calendar-check mr-1"></i>
                     <span class="hidden sm:inline">Kegiatan mendatang</span>
                     <span class="sm:hidden">Mendatang</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BPD Statistics -->
+    <div class="stat-card-hover">
+        <div class="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-lg border border-gray-100">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="text-xl md:text-2xl font-bold text-gray-900">{{ \App\Models\BpdMember::count() }}</div>
+                    <div class="text-xs md:text-sm text-gray-600 font-medium">Anggota BPD</div>
+                </div>
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-lg md:rounded-xl flex items-center justify-center shadow-lg">
+                    <i class="fas fa-building text-white text-sm md:text-base"></i>
+                </div>
+            </div>
+            <div class="mt-3 md:mt-4 flex items-center">
+                <div class="flex items-center text-xs text-indigo-600">
+                    <i class="fas fa-users mr-1"></i>
+                    <span class="hidden sm:inline">{{ \App\Models\BpdActivity::count() }} kegiatan terdokumentasi</span>
+                    <span class="sm:hidden">{{ \App\Models\BpdActivity::count() }} kegiatan</span>
                 </div>
             </div>
         </div>

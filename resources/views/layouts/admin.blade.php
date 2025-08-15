@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#10b981">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Admin Dashboard - Desa Cibeureum</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -212,6 +213,26 @@
                     <span>Agenda Kegiatan</span>
                 </a>
                 
+                <a href="{{ route('admin.bpd.index') }}" class="nav-item-hover flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 hover:text-village-primary font-medium {{ request()->routeIs('admin.bpd.*') ? 'bg-gradient-to-r from-village-primary/10 to-village-secondary/10 text-village-primary border-r-4 border-village-primary' : '' }}">
+                    <i class="fas fa-building w-5"></i>
+                    <span>Manajemen BPD</span>
+                </a>
+                
+                <a href="{{ route('admin.pembangunan.index') }}" class="nav-item-hover flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 hover:text-village-primary font-medium {{ request()->routeIs('admin.pembangunan.*') ? 'bg-gradient-to-r from-village-primary/10 to-village-secondary/10 text-village-primary border-r-4 border-village-primary' : '' }}">
+                    <i class="fas fa-hammer w-5"></i>
+                    <span>Pembangunan Desa</span>
+                </a>
+                
+                <a href="{{ route('admin.galeri.index') }}" class="nav-item-hover flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 hover:text-village-primary font-medium {{ request()->routeIs('admin.galeri.*') ? 'bg-gradient-to-r from-village-primary/10 to-village-secondary/10 text-village-primary border-r-4 border-village-primary' : '' }}">
+                    <i class="fas fa-images w-5"></i>
+                    <span>Galeri Foto</span>
+                </a>
+                
+                <a href="{{ route('admin.idm.index') }}" class="nav-item-hover flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 hover:text-village-primary font-medium {{ request()->routeIs('admin.idm.*') ? 'bg-gradient-to-r from-village-primary/10 to-village-secondary/10 text-village-primary border-r-4 border-village-primary' : '' }}">
+                    <i class="fas fa-chart-line w-5"></i>
+                    <span>IDM DESA</span>
+                </a>
+                
                 <a href="{{ route('admin.data-kependudukan.index') }}" class="nav-item-hover flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 hover:text-village-primary font-medium {{ request()->routeIs('admin.data-kependudukan.*') ? 'bg-gradient-to-r from-village-primary/10 to-village-secondary/10 text-village-primary border-r-4 border-village-primary' : '' }}">
                     <i class="fas fa-chart-pie w-5"></i>
                     <span>Data Penduduk</span>
@@ -225,6 +246,11 @@
                 <a href="{{ route('admin.users.index') }}" class="nav-item-hover flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 hover:text-village-primary font-medium {{ request()->routeIs('admin.users.*') ? 'bg-gradient-to-r from-village-primary/10 to-village-secondary/10 text-village-primary border-r-4 border-village-primary' : '' }}">
                     <i class="fas fa-users w-5"></i>
                     <span>Manajemen User</span>
+                </a>
+                
+                <a href="{{ route('admin.maintenance.index') }}" class="nav-item-hover flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 hover:text-village-primary font-medium {{ request()->routeIs('admin.maintenance.*') ? 'bg-gradient-to-r from-village-primary/10 to-village-secondary/10 text-village-primary border-r-4 border-village-primary' : '' }}">
+                    <i class="fas fa-tools w-5"></i>
+                    <span>Maintenance</span>
                 </a>
                 
                 <a href="{{ route('admin.laporan') }}" class="nav-item-hover flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 hover:text-village-primary font-medium {{ request()->routeIs('admin.laporan') ? 'bg-gradient-to-r from-village-primary/10 to-village-secondary/10 text-village-primary border-r-4 border-village-primary' : '' }}">
@@ -345,5 +371,8 @@
             });
         }, 5000);
     </script>
+
+    <!-- Page specific scripts -->
+    @stack('scripts')
 </body>
 </html>

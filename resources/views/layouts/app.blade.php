@@ -34,6 +34,37 @@
 
                     </ul>
 
+                        <!-- Navbar Tentang Desa -->
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="tentangDesaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Tentang Desa
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="tentangDesaDropdown">
+                                        <li><a class="dropdown-item" href="{{ route('public.tentang-desa') }}">Profil Desa</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('public.bpd') }}">BPD</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="dataDesaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Data Desa
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dataDesaDropdown">
+                                        <li><a class="dropdown-item" href="{{ route('public.data-kependudukan') }}">Data Kependudukan</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('public.apbdes') }}">APBDES</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('public.idm.index') }}">IDM DESA</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('public.pembangunan') }}">Pembangunan Desa</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('galeri.public') }}">Galeri</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('agenda.public') }}">Agenda</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('pengumuman.public') }}">Berita</a>
+                            </li>
+                        </ul>
+
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->

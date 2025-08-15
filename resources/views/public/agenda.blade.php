@@ -268,16 +268,16 @@
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <button id="mobile-menu-toggle"
+                <button type="button" id="mobile-menu-toggle" 
                     class="lg:hidden border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 p-3 rounded-full text-xl focus:outline-none transition-all duration-300">
-                    <i class="fas fa-bars"></i>
+                    <i class="fas fa-bars" id="menu-icon"></i>
                 </button>
             </div>
         </div>
 
         <!-- Mobile Navigation -->
         <div id="nav-mobile"
-            class="lg:hidden fixed top-full left-0 right-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-gray-200 dark:border-gray-700 shadow-xl max-h-screen overflow-y-auto z-40 transform -translate-y-full opacity-0 invisible transition-all duration-300">
+            class="lg:hidden fixed top-full left-0 right-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-gray-200 dark:border-gray-700 shadow-xl max-h-screen overflow-y-auto z-40 transform translate-y-full opacity-0 invisible transition-all duration-300 ease-in-out">
             <div class="py-6">
                 <ul class="space-y-2 px-4">
                     <li>
@@ -429,6 +429,31 @@
                                                 <i class="fas fa-calendar text-village-primary"></i>
                                                 <span>{{ $agenda->tanggal_mulai->format('d M Y') }}</span>
                                             </div>
+                                        </div>
+                                        <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
+                                            <div class="flex items-center gap-2">
+                                                @if($agenda->tanggal_mulai->isFuture())
+                                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
+                                                        <i class="fas fa-clock mr-1"></i>
+                                                        Akan Datang
+                                                    </span>
+                                                @elseif($agenda->tanggal_mulai->isToday())
+                                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
+                                                        <i class="fas fa-play mr-1"></i>
+                                                        Hari Ini
+                                                    </span>
+                                                @else
+                                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                                                        <i class="fas fa-check mr-1"></i>
+                                                        Selesai
+                                                    </span>
+                                                @endif
+                                            </div>
+                                            <a href="{{ route('agenda.show', $agenda->id) }}" 
+                                               class="inline-flex items-center px-3 py-2 bg-gradient-to-r from-village-primary to-village-secondary text-white font-medium text-sm rounded-lg hover:from-village-secondary hover:to-village-primary hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg">
+                                                <i class="fas fa-eye mr-2"></i>
+                                                Lihat Detail
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -634,232 +659,173 @@
     </section>
 
     <script>
-        // Filter functionality
-        function filterAgenda(category) {
-            const tabs = document.querySelectorAll('.filter-tab');
-            const cards = document.querySelectorAll('.agenda-card');
+        console.log('=== Agenda Page Script Starting ===');
 
-            // Update active tab
-            tabs.forEach(tab => tab.classList.remove('active'));
-            event.target.classList.add('active');
+        // Global variables
+        let mobileMenuOpen = false;
 
-        // Filter functionality with village theme
-        function filterAgenda(category) {
-            const tabs = document.querySelectorAll('.filter-tab');
-            const cards = document.querySelectorAll('.agenda-card');
-
-            // Update tab styles
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-                tab.classList.remove('bg-gradient-to-r', 'from-village-primary', 'to-village-secondary', 'text-white');
-                tab.classList.add('border-gray-200', 'dark:border-gray-600', 'bg-white', 'dark:bg-dark-400', 'text-gray-700', 'dark:text-gray-300');
-            });
-
-            event.target.classList.add('active');
-            event.target.classList.remove('border-gray-200', 'dark:border-gray-600', 'bg-white', 'dark:bg-dark-400', 'text-gray-700', 'dark:text-gray-300');
-            event.target.classList.add('bg-gradient-to-r', 'from-village-primary', 'to-village-secondary', 'text-white');
-
-            // Filter cards
-            cards.forEach(card => {
-                if (category === 'all' || card.dataset.category === category) {
-                    card.style.display = 'block';
-                    card.classList.add('animate-fade-in');
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-
-        // Calendar navigation
-        function previousMonth() {
-            console.log('Previous month');
-        }
-
-        function nextMonth() {
-            console.log('Next month');
-        }
-
-        // Theme toggle functionality
-        function toggleTheme() {
-            const html = document.documentElement;
-            const themeIcon = document.getElementById('theme-icon');
-            const themeText = document.getElementById('theme-text');
-            const themeIconMobile = document.getElementById('theme-icon-mobile');
-            const themeTextMobile = document.getElementById('theme-text-mobile');
-            const navbar = document.getElementById('navbar');
-            
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                themeIcon.className = 'fas fa-moon';
-                themeText.textContent = 'Dark';
-                if (themeIconMobile) {
-                    themeIconMobile.className = 'fas fa-moon mr-2';
-                    themeTextMobile.textContent = 'Mode Gelap';
-                }
-                localStorage.setItem('theme', 'light');
-                
-                // Update navbar for light mode
-                setTimeout(() => {
-                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                    if (scrollTop > 50) {
-                        navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
-                        navbar.style.borderBottom = '1px solid rgba(229, 231, 235, 0.8)';
-                    } else {
-                        navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
-                        navbar.style.borderBottom = '1px solid rgba(229, 231, 235, 0.5)';
-                    }
-                }, 50);
-            } else {
-                html.classList.add('dark');
-                themeIcon.className = 'fas fa-sun';
-                themeText.textContent = 'Light';
-                if (themeIconMobile) {
-                    themeIconMobile.className = 'fas fa-sun mr-2';
-                    themeTextMobile.textContent = 'Mode Terang';
-                }
-                localStorage.setItem('theme', 'dark');
-                
-                // Update navbar for dark mode
-                setTimeout(() => {
-                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                    if (scrollTop > 50) {
-                        navbar.style.backgroundColor = 'rgba(17, 24, 39, 0.98)';
-                        navbar.style.borderBottom = '1px solid rgba(75, 85, 99, 0.8)';
-                    } else {
-                        navbar.style.backgroundColor = 'rgba(17, 24, 39, 0.95)';
-                        navbar.style.borderBottom = '1px solid rgba(75, 85, 99, 0.5)';
-                    }
-                }, 50);
-            }
-        }
-
-        // Mobile menu toggle
+        // Simple and reliable mobile menu toggle
         function toggleMobileMenu() {
+            console.log('toggleMobileMenu called, current state:', mobileMenuOpen);
+            
             const mobileNav = document.getElementById('nav-mobile');
-            const menuButton = document.getElementById('mobile-menu-toggle');
-            const icon = menuButton.querySelector('i');
+            const menuIcon = document.getElementById('menu-icon');
             
-            // Toggle mobile menu
-            mobileNav.classList.toggle('-translate-y-full');
-            mobileNav.classList.toggle('opacity-0');
-            mobileNav.classList.toggle('invisible');
+            console.log('Mobile nav element:', mobileNav);
+            console.log('Menu icon element:', menuIcon);
             
-            // Toggle menu icon
-            if (icon.classList.contains('fa-bars')) {
-                icon.className = 'fas fa-times';
+            if (!mobileNav || !menuIcon) {
+                console.error('Required elements not found!');
+                return;
+            }
+
+            if (mobileMenuOpen) {
+                // Close menu
+                mobileNav.style.transform = 'translateY(100%)';
+                mobileNav.style.opacity = '0';
+                mobileNav.style.visibility = 'hidden';
+                menuIcon.className = 'fas fa-bars';
+                mobileMenuOpen = false;
+                console.log('Menu closed');
             } else {
-                icon.className = 'fas fa-bars';
+                // Open menu
+                mobileNav.style.transform = 'translateY(0)';
+                mobileNav.style.opacity = '1';
+                mobileNav.style.visibility = 'visible';
+                menuIcon.className = 'fas fa-times';
+                mobileMenuOpen = true;
+                console.log('Menu opened');
             }
         }
 
-        // Initialize on page load
+        // Initialize everything when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
-            // Set theme from localStorage
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            const html = document.documentElement;
-            const icon = document.getElementById('theme-icon');
-            const text = document.getElementById('theme-text');
-            const iconMobile = document.getElementById('theme-icon-mobile');
-            const textMobile = document.getElementById('theme-text-mobile');
-            
-            if (savedTheme === 'dark') {
-                html.classList.add('dark');
-                if (icon) icon.className = 'fas fa-sun';
-                if (text) text.textContent = 'Light';
-                if (iconMobile) iconMobile.className = 'fas fa-sun mr-2';
-                if (textMobile) textMobile.textContent = 'Mode Terang';
-            }
-
-            // Navbar scroll effect - Always visible
-            let lastScrollTop = 0;
-            const navbar = document.getElementById('navbar');
-            
-            window.addEventListener('scroll', function() {
-                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                
-                // Make navbar more opaque when scrolling
-                if (scrollTop > 50) {
-                    navbar.classList.add('navbar-scrolled');
-                    navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
-                    navbar.style.backdropFilter = 'blur(20px)';
-                    navbar.style.borderBottom = '1px solid rgba(229, 231, 235, 0.8)';
-                } else {
-                    navbar.classList.remove('navbar-scrolled');
-                    navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
-                    navbar.style.backdropFilter = 'blur(12px)';
-                    navbar.style.borderBottom = '1px solid rgba(229, 231, 235, 0.5)';
-                }
-                
-                // Dark mode handling
-                if (document.documentElement.classList.contains('dark')) {
-                    if (scrollTop > 50) {
-                        navbar.style.backgroundColor = 'rgba(17, 24, 39, 0.98)';
-                        navbar.style.borderBottom = '1px solid rgba(75, 85, 99, 0.8)';
-                    } else {
-                        navbar.style.backgroundColor = 'rgba(17, 24, 39, 0.95)';
-                        navbar.style.borderBottom = '1px solid rgba(75, 85, 99, 0.5)';
-                    }
-                }
-                
-                lastScrollTop = scrollTop;
-            });
+            console.log('DOM Content Loaded');
 
             // Mobile menu button event
-            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-            if (mobileMenuToggle) {
-                mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+            const mobileMenuButton = document.getElementById('mobile-menu-toggle');
+            console.log('Mobile menu button found:', mobileMenuButton);
+
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', function(e) {
+                    console.log('Mobile menu button clicked');
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleMobileMenu();
+                });
+                console.log('Click event listener added to mobile menu button');
+            } else {
+                console.error('Mobile menu button not found!');
             }
-        });
 
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+            // Close menu when clicking menu links
+            const mobileMenuLinks = document.querySelectorAll('#nav-mobile a');
+            console.log('Found mobile menu links:', mobileMenuLinks.length);
+            
+            mobileMenuLinks.forEach(function(link, index) {
+                link.addEventListener('click', function() {
+                    console.log('Mobile menu link', index, 'clicked');
+                    if (mobileMenuOpen) {
+                        setTimeout(function() {
+                            toggleMobileMenu();
+                        }, 100);
+                    }
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(e) {
+                const mobileNav = document.getElementById('nav-mobile');
+                const menuButton = document.getElementById('mobile-menu-toggle');
+                
+                if (mobileMenuOpen && mobileNav && menuButton) {
+                    if (!mobileNav.contains(e.target) && !menuButton.contains(e.target)) {
+                        console.log('Clicked outside, closing menu');
+                        toggleMobileMenu();
+                    }
                 }
             });
-        });
 
-        // Animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+            // Theme toggle
+            window.toggleTheme = function() {
+                const html = document.documentElement;
+                const currentTheme = html.classList.contains('dark') ? 'dark' : 'light';
+                
+                if (currentTheme === 'dark') {
+                    html.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    html.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
                 }
-            });
-        }, observerOptions);
+                console.log('Theme toggled to:', currentTheme === 'dark' ? 'light' : 'dark');
+            };
 
-        // Observe agenda cards and sidebar widgets
-        document.querySelectorAll('.agenda-card, .bg-white').forEach(element => {
-            element.style.opacity = '0';
-            element.style.transform = 'translateY(20px)';
-            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(element);
+            // Set saved theme
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+            }
+
+            // Navbar scroll effect
+            const navbar = document.getElementById('navbar');
+            if (navbar) {
+                window.addEventListener('scroll', function() {
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    
+                    if (scrollTop > 50) {
+                        navbar.classList.add('navbar-scrolled');
+                    } else {
+                        navbar.classList.remove('navbar-scrolled');
+                    }
+                });
+            }
+
+            // Filter functionality
+            window.filterAgenda = function(category) {
+                console.log('Filtering agenda by category:', category);
+                const cards = document.querySelectorAll('.agenda-card');
+                const tabs = document.querySelectorAll('.filter-tab');
+
+                // Update active tab
+                tabs.forEach(function(tab) {
+                    tab.classList.remove('active', 'bg-gradient-to-r', 'from-village-primary', 'to-village-secondary', 'text-white');
+                    tab.classList.add('border-gray-200', 'bg-white', 'text-gray-700');
+                });
+
+                const activeTab = event.target;
+                activeTab.classList.add('active', 'bg-gradient-to-r', 'from-village-primary', 'to-village-secondary', 'text-white');
+                activeTab.classList.remove('border-gray-200', 'bg-white', 'text-gray-700');
+
+                // Filter cards
+                cards.forEach(function(card) {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            };
+
+            // Calendar functions
+            window.previousMonth = function() {
+                console.log('Previous month clicked');
+            };
+
+            window.nextMonth = function() {
+                console.log('Next month clicked');
+            };
+
+            // Global test function
+            window.testMobileMenu = function() {
+                console.log('=== TESTING MOBILE MENU ===');
+                toggleMobileMenu();
+            };
+
+            console.log('=== All event listeners initialized ===');
         });
 
-        // Add hover effects with village colors
-        document.querySelectorAll('.agenda-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.borderLeftColor = '#059669';
-                this.style.transform = 'translateY(-5px)';
-            });
-
-            card.addEventListener('mouseleave', function() {
-                this.style.borderLeftColor = '#10b981';
-                this.style.transform = 'translateY(0)';
-            });
-        });
+        console.log('=== Agenda Page Script Loaded Successfully ===');
     </script>
 
     <style>

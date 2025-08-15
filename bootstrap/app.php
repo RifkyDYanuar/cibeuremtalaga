@@ -14,7 +14,12 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => \App\Http\Middleware\RoleMiddleware::class,
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
+            'maintenance' => \App\Http\Middleware\MaintenanceMode::class,
         ]);
+        
+        // Apply maintenance middleware globally only when needed
+        // Comment this line to disable automatic maintenance checking
+        // $middleware->append(\App\Http\Middleware\MaintenanceMode::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

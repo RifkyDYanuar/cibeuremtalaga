@@ -8,7 +8,7 @@
     <div class="mb-6 md:mb-8">
         <div class="flex flex-col gap-4">
             <div>
-                <h1 class="text-2xl md:text-3xl font-bold text-gray-900 flex items-center gap-2 md:gap-3">
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2 md:gap-3">
                     <div class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-lg md:rounded-xl flex items-center justify-center">
                         <i class="fas fa-calendar-alt text-white text-sm md:text-base"></i>
                     </div>
@@ -204,9 +204,18 @@
                     </a>
                     <button type="button" 
                             class="inline-flex items-center px-2 py-1.5 border border-transparent text-xs leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 transition-colors duration-200"
-                            onclick="deleteAgenda({{ $agenda->id }})">
+                            onclick="confirmDeleteAgenda({{ $agenda->id }}, '{{ addslashes($agenda->judul) }}')">
                         <i class="fas fa-trash"></i>
                     </button>
+                    <!-- Alternative simple delete -->
+                    <form method="POST" action="{{ route('admin.agenda.destroy', $agenda->id) }}" class="inline ml-1" 
+                          onsubmit="return confirm('Yakin ingin menghapus agenda: {{ addslashes($agenda->judul) }}?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="inline-flex items-center px-1.5 py-1.5 text-xs font-medium text-red-600 bg-red-50 rounded hover:bg-red-100 transition-colors" title="Hapus Langsung">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </form>
                 </div>
                 <form id="delete-form-{{ $agenda->id }}" action="{{ route('admin.agenda.destroy', $agenda->id) }}" method="POST" style="display: none;">
                     @csrf
@@ -360,27 +369,58 @@
 </div>
 
 <script>
-function deleteAgenda(id) {
-    if (confirm('Apakah Anda yakin ingin menghapus agenda ini?')) {
-        document.getElementById('delete-form-' + id).submit();
+console.log('Agenda page loaded');
+
+function confirmDeleteAgenda(id, title) {
+    console.log('confirmDeleteAgenda called with ID:', id, 'Title:', title);
+    
+    const confirmed = confirm('Apakah Anda yakin ingin menghapus agenda: ' + title + '?');
+    if (confirmed) {
+        const form = document.getElementById('delete-form-' + id);
+        if (form) {
+            console.log('Submitting delete form for ID:', id);
+            form.submit();
+        } else {
+            console.error('Delete form not found for ID:', id);
+        }
     }
 }
 
+function deleteAgenda(id) {
+    // Legacy function for backward compatibility
+    console.log('deleteAgenda called with ID:', id);
+    confirmDeleteAgenda(id, 'agenda ini');
+}
+
 // Simple Filter Functions
-document.getElementById('filterStatus').addEventListener('change', filterTable);
-document.getElementById('filterKategori').addEventListener('change', filterTable);
+document.addEventListener('DOMContentLoaded', function() {
+    const statusFilter = document.getElementById('filterStatus');
+    const kategoriFilter = document.getElementById('filterKategori');
+    
+    if (statusFilter) {
+        statusFilter.addEventListener('change', filterTable);
+    }
+    if (kategoriFilter) {
+        kategoriFilter.addEventListener('change', filterTable);
+    }
+});
 
 function filterTable() {
-    const statusFilter = document.getElementById('filterStatus').value;
-    const kategoriFilter = document.getElementById('filterKategori').value;
+    const statusFilter = document.getElementById('filterStatus');
+    const kategoriFilter = document.getElementById('filterKategori');
+    
+    if (!statusFilter || !kategoriFilter) return;
+    
+    const statusValue = statusFilter.value;
+    const kategoriValue = kategoriFilter.value;
     const rows = document.querySelectorAll('.agenda-row');
 
     rows.forEach(row => {
         const status = row.dataset.status;
         const kategori = row.dataset.kategori;
         
-        const statusMatch = !statusFilter || status === statusFilter;
-        const kategoriMatch = !kategoriFilter || kategori === kategoriFilter;
+        const statusMatch = !statusValue || status === statusValue;
+        const kategoriMatch = !kategoriValue || kategori === kategoriValue;
         
         if (statusMatch && kategoriMatch) {
             row.style.display = '';
@@ -389,5 +429,8 @@ function filterTable() {
         }
     });
 }
+
+console.log('Agenda scripts loaded successfully');
+</script>
 </script>
 @endsection
