@@ -28,11 +28,14 @@
     <meta name="twitter:description" content="@yield('twitter_description', 'Portal resmi Desa Cibeureum Talaga dengan layanan informasi dan pelayanan online untuk masyarakat.')">
     <meta name="twitter:image" content="@yield('twitter_image', asset('logo.svg'))">
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon.png') }}">
-    <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}">
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+    <!-- Favicon - Multiple formats for better compatibility -->
+    <link rel="icon" type="image/x-icon" href="{{ url('/favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url('/favicon.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url('/favicon.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url('/favicon.png') }}">
+    <link rel="shortcut icon" href="{{ url('/favicon.ico') }}">
+    <!-- Fallback to images folder -->
+    <link rel="alternate icon" type="image/png" href="{{ asset('images/logo.png') }}">
     
     <!-- JSON-LD Structured Data -->
     {{-- <script type="application/ld+json">

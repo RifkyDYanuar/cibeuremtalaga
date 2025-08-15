@@ -12,8 +12,12 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <!-- Favicon - Multiple formats for better compatibility -->
+    <link rel="icon" type="image/x-icon" href="{{ url('/favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url('/favicon.png') }}">
+    <link rel="shortcut icon" href="{{ url('/favicon.ico') }}">
+    <!-- Fallback to images folder -->
+    <link rel="alternate icon" type="image/png" href="{{ asset('images/logo.png') }}">
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])

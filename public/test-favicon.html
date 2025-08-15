@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Favicon</title>
+    <!-- Multiple favicon formats untuk compatibility -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
+    <link rel="shortcut icon" href="/favicon.ico">
+    
+    <!-- Alternative dengan full URL -->
+    <!-- 
+    <link rel="icon" type="image/x-icon" href="{{ url('/favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url('/favicon.png') }}">
+    -->
+</head>
+<body>
+    <h1>Test Favicon</h1>
+    <p>Cek apakah favicon muncul di tab browser</p>
+    
+    <h2>Debug Info:</h2>
+    <p>Favicon URL: <a href="/favicon.ico" target="_blank">/favicon.ico</a></p>
+    <p>Favicon PNG: <a href="/favicon.png" target="_blank">/favicon.png</a></p>
+    
+    <script>
+        // Test akses favicon
+        fetch('/favicon.ico')
+            .then(response => {
+                if (response.ok) {
+                    console.log('✅ favicon.ico accessible');
+                    document.body.innerHTML += '<p style="color: green;">✅ favicon.ico accessible</p>';
+                } else {
+                    console.log('❌ favicon.ico not found');
+                    document.body.innerHTML += '<p style="color: red;">❌ favicon.ico not found (Status: ' + response.status + ')</p>';
+                }
+            })
+            .catch(error => {
+                console.log('❌ Error accessing favicon.ico:', error);
+                document.body.innerHTML += '<p style="color: red;">❌ Error accessing favicon.ico</p>';
+            });
+    </script>
+</body>
+</html>
