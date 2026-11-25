@@ -7,4 +7,4 @@ Disallow: /register
 Disallow: /storage/surat_jadi/
 Disallow: /storage/lampiran/
 
-Sitemap: https://cibeureumtalaga.id/sitemap.xml
+Sitemap: https://desacibeurem.id/sitemap.xml
